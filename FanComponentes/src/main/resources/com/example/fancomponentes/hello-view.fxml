@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<!--VISTA -->
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+      <Button layoutX="259.0" layoutY="313.0" mnemonicParsing="false" text="Iniciar Sesión" />
+      <TextField layoutX="226.0" layoutY="175.0" />
+      <Label layoutX="274.0" layoutY="150.0" text="Usuario" />
+      <Label layoutX="270.0" layoutY="206.0" text="Contraseña" />
+      <PasswordField layoutX="226.0" layoutY="223.0" />
+   </children>
+</AnchorPane>
