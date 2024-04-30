@@ -20,6 +20,9 @@ public class DatabaseConnector {
             // Establecer la conexión con la base de datos
             conn = DriverManager.getConnection(URL, USUARIO, CONTRASEÑA);
             System.out.println("Conexión exitosa a la base de datos.");
+            System.out.println("-----------------------------------");
+            System.out.println("-----------------------------------");
+            System.out.println("-----------------------------------");
         } catch (ClassNotFoundException | SQLException e) {
             System.err.println("Error al conectar a la base de datos: " + e.getMessage());
         }
