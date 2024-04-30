@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<!--VISTA -->
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+  <tabs>
+    <Tab text="Login">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="134.0" fitWidth="195.0" layoutX="220.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../img/logoFanComponentes.jpg" />
+                     </image>
+                  </ImageView>
+                  <Button layoutX="249.0" layoutY="286.0" mnemonicParsing="false" text="Iniciar Sesión" />
+                  <TextField layoutX="207.0" layoutY="173.0" prefHeight="25.0" prefWidth="170.0" />
+                  <Label layoutX="259.0" layoutY="203.0" text="Contraseña" />
+                  <Label layoutX="265.0" layoutY="147.0" prefHeight="17.0" prefWidth="54.0" text="Usuario" />
+                  <PasswordField layoutX="207.0" layoutY="220.0" prefHeight="25.0" prefWidth="169.0" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Arbol de navegabilidad">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+      </content>
+    </Tab>
+  </tabs>
+</TabPane>
