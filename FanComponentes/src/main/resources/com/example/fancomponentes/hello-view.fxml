@@ -14,7 +14,7 @@
                <children>
                   <ImageView fitHeight="134.0" fitWidth="195.0" layoutX="220.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../img/logoFanComponentes.jpg" />
+                        <Image url="@../../../../../img/logoFanComponentes.jpg"/>
                      </image>
                   </ImageView>
                   <Button layoutX="249.0" layoutY="286.0" mnemonicParsing="false" text="Iniciar Sesión" />
