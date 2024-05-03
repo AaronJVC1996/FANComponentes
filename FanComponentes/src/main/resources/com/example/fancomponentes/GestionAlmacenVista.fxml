@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<VBox alignment="CENTER_LEFT" spacing="10.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.gestorempleadosaaronvasquez.ConsultaEmpleadoController">
+
+    <padding>
+        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
+    </padding>
+
+    <HBox spacing="10.0">
+        <!-- ListView para mostrar los nombres de los empleados con su anchura y su largura especificada por mi -->
+        <ListView fx:id="empleadosListView" prefWidth="200" maxHeight="250"/>
+
+        <!-- VBox para mostrar los datos del empleado seleccionado con su anchura y largura bien especificada-->
+        <VBox spacing="10.0" VBox.vgrow="ALWAYS" prefWidth="300" maxHeight="200">
+            <padding>
+                <Insets left="20" top="10"/>
+            </padding>
+            <Label fx:id="idLabel"/>
+            <Label fx:id="nombreLabel"/>
+            <Label fx:id="puestoLabel"/>
+            <Label fx:id="salarioLabel"/>
+            <Label fx:id="fechaLabel"/>
+
+            <!-- HBox para los botones de editar y eliminar con sus alineamientos y separaciones correctas-->
+            <HBox spacing="60.0" alignment="BOTTOM_CENTER">
+                <padding>
+                    <Insets top="30" />
+                </padding>
+                <Button text="Editar"/>
+                <Button text="Eliminar" onAction="#eliminarEmpleado"/>
+            </HBox>
+        </VBox>
+    </HBox>
+    <!-- Otro HBox para el boton de refrescar, con su padding para centrarla ala ListView-->
+    <HBox>
+        <padding>
+            <Insets left="55"/>
+        </padding>
+        <Button text="Refrescar" onAction="#refrescarLista"/>
+    </HBox>
+</VBox>
