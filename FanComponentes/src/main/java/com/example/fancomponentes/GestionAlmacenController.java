@@ -2,6 +2,7 @@ package com.example.fancomponentes;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
 
 import java.sql.*;
 
@@ -10,16 +11,17 @@ public class GestionAlmacenController {
     private ListView<String> componentesListView;
 
     @FXML
-    private Label idComponenteLabel;
+    private TableColumn<String, Integer> idComponenteColumn;
 
     @FXML
-    private Label nombreLabel;
+    private TableColumn<String, String> nombreColumn;
 
     @FXML
-    private Label stockLabel;
+    private TableColumn<String, Integer> stockColumn;
 
     @FXML
-    private Label precioLabel;
+    private TableColumn<String, Double> precioColumn;
+
 
     @FXML
     private Label descripcionLabel;
@@ -59,10 +61,10 @@ public class GestionAlmacenController {
                 declaracion.setString(1, nombreComponente);
                 ResultSet resultado = declaracion.executeQuery();
                 if (resultado.next()) {
-                    idComponenteLabel.setText(resultado.getString("idcomponente"));
-                    nombreLabel.setText(resultado.getString("nombre"));
-                    stockLabel.setText(resultado.getString("stock"));
-                    precioLabel.setText(resultado.getString("precio"));
+                    idComponenteColumn.setText(resultado.getString("idcomponente"));
+                    nombreColumn.setText(resultado.getString("nombre"));
+                    stockColumn.setText(resultado.getString("stock"));
+                    precioColumn.setText(resultado.getString("precio"));
                     descripcionLabel.setText(resultado.getString("descripcion"));
                 }
             }
