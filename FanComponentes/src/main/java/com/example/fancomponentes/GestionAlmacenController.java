@@ -2,6 +2,7 @@ package com.example.fancomponentes;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
 
 import java.sql.*;
 
@@ -10,54 +11,40 @@ public class GestionAlmacenController {
     private ListView<String> componentesListView;
 
     @FXML
-    private Label idComponenteLabel;
+    private TableColumn<String, Integer> idComponenteColumn;
 
     @FXML
-    private Label nombreLabel;
+    private TableColumn<String, String> nombreColumn;
 
     @FXML
-    private Label stockLabel;
+    private TableColumn<String, Integer> stockColumn;
 
     @FXML
-    private Label precioLabel;
+    private TableColumn<String, Double> precioColumn;
+
 
     @FXML
     private Label descripcionLabel;
 
     @FXML
     private void initialize() {
-        // Initialize TableView columns
-        idComponenteColumn.setCellValueFactory(new PropertyValueFactory<>("idComponente"));
-        nombreColumn.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        precioColumn.setCellValueFactory(new PropertyValueFactory<>("precio"));
-        stockColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
-
-        // Load data into TableView
+        // Cargar los nombres de los empleados desde la base de datos
         cargarComponentes();
 
-        // Configure listener for TableView selection
-        componentesTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                mostrarDescripcionComponentes(newValue.getNombre());
-            }
+        // Configurar el listener para el evento de selección en el ListView (obtenido de internet)
+        componentesListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            // Mostrar los detalles del empleado seleccionado
+            mostrarDetallesComponentes(newValue);
         });
     }
 
+    // Metodo para cargar los nombres de los empleados desde la base de datos y mostrarlos en el ListView
     private void cargarComponentes() {
-        try (Connection conexion = DatabaseConnector.getConexion()) {
-            String consulta = "SELECT idcomponente, nombre, stock, precio FROM componentes";
+        try (Connection conexion = DriverManager.getConnection("jdbc:mysql://10.168.58.2:3306/fancomponentes", "root", "Dam1bSql01")) {
+            String consulta = "SELECT nombre FROM componentes";
             try (PreparedStatement declaracion = conexion.prepareStatement(consulta)) {
                 ResultSet resultado = declaracion.executeQuery();
                 while (resultado.next()) {
-                    // Populate TableView
-                    componentesTableView.getItems().add(new Componente(
-                            resultado.getInt("idcomponente"),
-                            resultado.getString("nombre"),
-                            resultado.getInt("stock"),
-                            resultado.getInt("precio")
-                    ));
-
-                    // Populate ListView
                     componentesListView.getItems().add(resultado.getString("nombre"));
                 }
             }
@@ -66,14 +53,18 @@ public class GestionAlmacenController {
         }
     }
 
-
-    private void mostrarDescripcionComponentes(String nombreComponente) {
-        try (Connection conexion = DatabaseConnector.getConexion()) {
-            String consulta = "SELECT descripcion FROM componentes WHERE nombre = ?";
+    private void mostrarDetallesComponentes(String nombreComponente) {
+        // Consulta ala base de datos para saber los detalles de los componentes
+        try (Connection conexion = DriverManager.getConnection("jdbc:mysql://10.168.58.2:3306/fancomponentes", "root", "Dam1bSql01")) {
+            String consulta = "SELECT idcomponente, nombre, stock, precio, descripcion FROM componentes WHERE nombre = ?";
             try (PreparedStatement declaracion = conexion.prepareStatement(consulta)) {
                 declaracion.setString(1, nombreComponente);
                 ResultSet resultado = declaracion.executeQuery();
                 if (resultado.next()) {
+                    idComponenteColumn.setText(resultado.getString("idcomponente"));
+                    nombreColumn.setText(resultado.getString("nombre"));
+                    stockColumn.setText(resultado.getString("stock"));
+                    precioColumn.setText(resultado.getString("precio"));
                     descripcionLabel.setText(resultado.getString("descripcion"));
                 }
             }
@@ -81,7 +72,7 @@ public class GestionAlmacenController {
             e.printStackTrace();
         }
     }
-
+    // Metodo para eliminar un empleado seleccionado
 
     // Actualizar componentes
     @FXML
@@ -104,4 +95,8 @@ public class GestionAlmacenController {
 
 
     }
+
+
+
+
 }

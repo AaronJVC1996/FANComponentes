@@ -3,47 +3,56 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER_LEFT" prefHeight="431.0" prefWidth="612.0" spacing="10.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestorempleadosaaronvasquez.ConsultaEmpleadoController">
+<VBox alignment="CENTER_LEFT" prefHeight="431.0" prefWidth="612.0" spacing="10.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fancomponentes.GestionAlmacenController">
 
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
 
     <HBox prefWidth="463.0" spacing="10.0">
-      <TableView prefHeight="356.0" prefWidth="228.0">
-        <columns>
-          <TableColumn prefWidth="75.0" text="Id" />
-          <TableColumn prefWidth="75.0" text="Nombre" />
-            <TableColumn prefWidth="75.0" text="Precio" />
-        </columns>
-         <HBox.margin>
-            <Insets />
-         </HBox.margin>
-      </TableView>
+        <TableView prefHeight="356.0" prefWidth="376.0">
+            <columns>
+                <TableColumn fx:id="idComponenteColumn" prefWidth="61.0" text="Id" />
+                <TableColumn fx:id="nombreColumn" prefWidth="121.0" text="Nombre" />
+                <TableColumn fx:id="precioColumn" prefWidth="45.0" text="Precio" />
+                <TableColumn fx:id="stockColumn" prefWidth="75.0" text="Stock" />
+            </columns>
+            <HBox.margin>
+                <Insets />
+            </HBox.margin>
+        </TableView>
 
-        <!-- VBox para mostrar los datos del empleado seleccionado con su anchura y largura bien especificada-->
-        <VBox maxHeight="351.0" prefHeight="351.0" prefWidth="332.0" spacing="10.0" VBox.vgrow="ALWAYS">
+        <VBox alignment="CENTER" maxHeight="351.0" prefHeight="351.0" prefWidth="332.0" spacing="10.0" VBox.vgrow="ALWAYS">
             <padding>
                 <Insets left="20" top="10" />
             </padding>
-         <Label text="Detalles del componente">
-            <VBox.margin>
-               <Insets left="85.0" />
-            </VBox.margin></Label>
-         <HBox prefHeight="100.0" prefWidth="190.0" />
+            <HBox prefHeight="100.0" prefWidth="190.0">
+                <children>
+                    <Label prefHeight="41.0" prefWidth="230.0" text="Descripcion del componente">
+                        <font>
+                            <Font name="Corbel" size="18.0" />
+                        </font>
+                    </Label>
+                </children>
+            </HBox>
 
-                  <!-- HBox para los botones de editar y eliminar con sus alineamientos y separaciones correctas-->
-            <HBox alignment="BOTTOM_CENTER" prefHeight="25.0" prefWidth="255.0" spacing="50.0">
-                <Button fx:id="btnAnadir" prefHeight="25.0" prefWidth="89.0" text="Añadir" textAlignment="CENTER" textFill="#42b55f" textOverrun="CLIP" />
-                <Button fx:id="btnNuevoCom" onAction="#eliminarEmpleado" prefHeight="25.0" prefWidth="131.0" text="Nuevo Componente" />
-            <VBox.margin>
-               <Insets top="200.0" />
-            </VBox.margin>
+            <Label prefHeight="108.0" prefWidth="199.0" text="" wrapText="true">
+                <padding>
+                    <Insets top="20.0" />
+                </padding>
+                <maxWidth>300.0</maxWidth>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="25.0" prefWidth="255.0" spacing="50.0">
+                <Button fx:id="btnAnadir" onAction="#aniadirStock" prefHeight="25.0" prefWidth="89.0" text="Añadir" textAlignment="CENTER" textFill="#42b55f" textOverrun="CLIP" />
+                <Button fx:id="btnNuevoCom" onAction="#aniadirComponente" prefHeight="25.0" prefWidth="131.0" text="Nuevo Componente" />
+                <VBox.margin>
+                    <Insets top="200.0" />
+                </VBox.margin>
             </HBox>
         </VBox>
     </HBox>
-    <!-- Otro HBox para el boton de refrescar, con su padding para centrarla ala ListView-->
     <HBox>
         <padding>
             <Insets left="55" />
