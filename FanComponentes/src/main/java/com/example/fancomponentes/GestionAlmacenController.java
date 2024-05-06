@@ -40,7 +40,7 @@ public class GestionAlmacenController {
 
     // Metodo para cargar los nombres de los componentes desde la base de datos y mostrarlos en el ListView
     private void cargarComponentes() {
-        try (Connection conexion = DriverManager.getConnection("jdbc:mysql://10.168.58.2:3306/fancomponentes", "root", "Dam1bSql01")) {
+        try (Connection conexion = DatabaseConnector.getConexion()) {
             String consulta = "SELECT idcomponente, nombre, stock, precio, descripcion FROM componentes";
             try (PreparedStatement declaracion = conexion.prepareStatement(consulta)) {
                 ResultSet resultado = declaracion.executeQuery();
@@ -66,7 +66,7 @@ public class GestionAlmacenController {
 
     private void mostrarDetallesComponentes(String nombreComponente) {
         // Consulta ala base de datos para saber los detalles de los componentes
-        try (Connection conexion = DriverManager.getConnection("jdbc:mysql://10.168.58.2:3306/fancomponentes", "root", "Dam1bSql01")) {
+        try (Connection conexion = DatabaseConnector.getConexion()) {
             String consulta = "SELECT idcomponente, nombre, stock, precio, descripcion FROM componentes WHERE nombre = ?";
             try (PreparedStatement declaracion = conexion.prepareStatement(consulta)) {
                 declaracion.setString(1, nombreComponente);
