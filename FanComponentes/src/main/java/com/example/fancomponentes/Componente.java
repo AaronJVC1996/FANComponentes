@@ -5,11 +5,11 @@ public class Componente {
     private final String id;
     private String nombre;
     private int stock;
-    private int precio;
+    private double precio;
 
     private String descripcion;
 
-    public Componente(String id) {
+    public Componente(String id, String nombre, int stock, double precio, String descripcion) {
         this.id = id;
         this.nombre = nombre;
         this.stock = stock;
@@ -37,11 +37,11 @@ public class Componente {
         this.stock = stock;
     }
 
-    public int getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(int precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 
