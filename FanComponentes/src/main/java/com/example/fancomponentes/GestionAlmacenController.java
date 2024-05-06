@@ -28,7 +28,7 @@ public class GestionAlmacenController {
 
     @FXML
     private void initialize() {
-        // Cargar los nombres de los empleados desde la base de datos
+        // Cargar los nombres de los componentes desde la base de datos
         cargarComponentes();
 
         // Configurar el listener para el evento de selección en el ListView (obtenido de internet)
@@ -38,20 +38,31 @@ public class GestionAlmacenController {
         });
     }
 
-    // Metodo para cargar los nombres de los empleados desde la base de datos y mostrarlos en el ListView
+    // Metodo para cargar los nombres de los componentes desde la base de datos y mostrarlos en el ListView
     private void cargarComponentes() {
         try (Connection conexion = DriverManager.getConnection("jdbc:mysql://10.168.58.2:3306/fancomponentes", "root", "Dam1bSql01")) {
-            String consulta = "SELECT nombre FROM componentes";
+            String consulta = "SELECT idcomponente, nombre, stock, precio, descripcion FROM componentes";
             try (PreparedStatement declaracion = conexion.prepareStatement(consulta)) {
                 ResultSet resultado = declaracion.executeQuery();
                 while (resultado.next()) {
-                    componentesListView.getItems().add(resultado.getString("nombre"));
+                    String id = resultado.getString("idcomponente");
+                    String nombre = resultado.getString("nombre");
+                    int stock = resultado.getInt("stock");
+                    double precio = resultado.getDouble("precio");
+                    String descripcion = resultado.getString("descripcion");
+
+                    // Create a new Componente object
+                    Componente componente = new Componente(id, nombre, stock, precio, descripcion);
+
+                    // Add the Componente object to the ListView
+                    componentesListView.getItems().add(componente.getNombre()); // Displaying the name in the ListView
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 
     private void mostrarDetallesComponentes(String nombreComponente) {
         // Consulta ala base de datos para saber los detalles de los componentes
