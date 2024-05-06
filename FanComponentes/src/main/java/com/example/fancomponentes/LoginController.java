@@ -26,9 +26,9 @@ public class LoginController {
         String password = passwordField.getText();
 
         // Conectar a la base de datos
-        try (Connection conn = DatabaseConnector.conectar()) {
+        try (Connection conexion = DatabaseConnector.getConexion()) {
             // Verificar las credenciales del usuario en la base de datos
-            if (verificarCredenciales(conn, username, password)) {
+            if (verificarCredenciales(conexion, username, password)) {
                 System.out.println("Inicio de sesión exitoso");
                 // Aquí puedes abrir una nueva ventana o realizar alguna acción después de iniciar sesión
             } else {
@@ -42,9 +42,9 @@ public class LoginController {
     }
 
     // Método para verificar las credenciales del usuario en la base de datos
-    private boolean verificarCredenciales(Connection conn, String username, String password) throws SQLException {
+    private boolean verificarCredenciales(Connection conexion, String username, String password) throws SQLException {
         String sql = "SELECT * FROM ROLES WHERE NOMBRE=? AND CONTRASEÑA=?";
-        try (PreparedStatement statement = conn.prepareStatement(sql)) {
+        try (PreparedStatement statement = conexion.prepareStatement(sql)) {
             statement.setString(1, username);
             statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();
