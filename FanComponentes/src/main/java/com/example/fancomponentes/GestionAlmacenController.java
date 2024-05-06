@@ -54,15 +54,31 @@ public class GestionAlmacenController {
     private void mostrarDetallesComponentes(String nombreComponente) {
         // Consulta ala base de datos para saber los detalles de los componentes
         try (Connection conexion = DriverManager.getConnection("jdbc:mysql://10.168.58.2:3306/fancomponentes", "root", "Dam1bSql01")) {
-            String consulta = "SELECT idcomponente, nombre, stock, precio, descripcion FROM componentes WHERE nombre = ?";
+            String consulta = "SELECT idcomponente, nombre, stock, precio FROM componentes WHERE nombre = ?";
             try (PreparedStatement declaracion = conexion.prepareStatement(consulta)) {
                 declaracion.setString(1, nombreComponente);
                 ResultSet resultado = declaracion.executeQuery();
                 if (resultado.next()) {
                     idComponenteLabel.setText(resultado.getString("idcomponente"));
                     nombreLabel.setText(resultado.getString("nombre"));
-                    stockLabel.setText(resultado.getString("stock"));
                     precioLabel.setText(resultado.getString("precio"));
+                    stockLabel.setText(resultado.getString("stock"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void mostrarDescripcionComponentes(String nombreComponente) {
+        // Consulta ala base de datos para saber los detalles de los componentes
+        try (Connection conexion = DriverManager.getConnection("jdbc:mysql://10.168.58.2:3306/fancomponentes", "root", "Dam1bSql01")) {
+            String consulta = "SELECT descripcion FROM componentes WHERE nombre = ?";
+            try (PreparedStatement declaracion = conexion.prepareStatement(consulta)) {
+                declaracion.setString(1, nombreComponente);
+                ResultSet resultado = declaracion.executeQuery();
+                if (resultado.next()) {
                     descripcionLabel.setText(resultado.getString("descripcion"));
                 }
             }
@@ -70,7 +86,7 @@ public class GestionAlmacenController {
             e.printStackTrace();
         }
     }
-    // Metodo para eliminar un empleado seleccionado
+
 
     // Actualizar componentes
     @FXML
