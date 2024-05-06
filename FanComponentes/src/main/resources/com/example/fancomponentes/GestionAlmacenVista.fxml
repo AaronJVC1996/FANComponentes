@@ -1,49 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.geometry.Insets?>
-<VBox alignment="CENTER_LEFT" spacing="10.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.gestorempleadosaaronvasquez.ConsultaEmpleadoController">
+<VBox alignment="CENTER_LEFT" prefHeight="431.0" prefWidth="612.0" spacing="10.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestorempleadosaaronvasquez.ConsultaEmpleadoController">
 
     <padding>
-        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
 
-    <HBox spacing="10.0">
-        <!-- ListView para mostrar los nombres de los empleados con su anchura y su largura especificada por mi -->
-        <ListView fx:id="empleadosListView" prefWidth="200" maxHeight="250"/>
+    <HBox prefWidth="463.0" spacing="10.0">
+      <TableView prefHeight="356.0" prefWidth="228.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Id" />
+          <TableColumn prefWidth="75.0" text="Nombre" />
+            <TableColumn prefWidth="75.0" text="Precio" />
+        </columns>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+      </TableView>
 
         <!-- VBox para mostrar los datos del empleado seleccionado con su anchura y largura bien especificada-->
-        <VBox spacing="10.0" VBox.vgrow="ALWAYS" prefWidth="300" maxHeight="200">
+        <VBox maxHeight="351.0" prefHeight="351.0" prefWidth="332.0" spacing="10.0" VBox.vgrow="ALWAYS">
             <padding>
-                <Insets left="20" top="10"/>
+                <Insets left="20" top="10" />
             </padding>
-            <Label fx:id="idLabel"/>
-            <Label fx:id="nombreLabel"/>
-            <Label fx:id="puestoLabel"/>
-            <Label fx:id="salarioLabel"/>
-            <Label fx:id="fechaLabel"/>
+         <Label text="Detalles del componente">
+            <VBox.margin>
+               <Insets left="85.0" />
+            </VBox.margin></Label>
+         <HBox prefHeight="100.0" prefWidth="190.0" />
 
-            <!-- HBox para los botones de editar y eliminar con sus alineamientos y separaciones correctas-->
-            <HBox spacing="60.0" alignment="BOTTOM_CENTER">
-                <padding>
-                    <Insets top="30" />
-                </padding>
-                <Button text="Editar"/>
-                <Button text="Eliminar" onAction="#eliminarEmpleado"/>
+                  <!-- HBox para los botones de editar y eliminar con sus alineamientos y separaciones correctas-->
+            <HBox alignment="BOTTOM_CENTER" prefHeight="25.0" prefWidth="255.0" spacing="50.0">
+                <Button fx:id="btnAnadir" prefHeight="25.0" prefWidth="89.0" text="Añadir" textAlignment="CENTER" textFill="#42b55f" textOverrun="CLIP" />
+                <Button fx:id="btnNuevoCom" onAction="#eliminarEmpleado" prefHeight="25.0" prefWidth="131.0" text="Nuevo Componente" />
+            <VBox.margin>
+               <Insets top="200.0" />
+            </VBox.margin>
             </HBox>
         </VBox>
     </HBox>
     <!-- Otro HBox para el boton de refrescar, con su padding para centrarla ala ListView-->
     <HBox>
         <padding>
-            <Insets left="55"/>
+            <Insets left="55" />
         </padding>
-        <Button text="Refrescar" onAction="#refrescarLista"/>
+        <Button fx:id="btnActualizar" onAction="#refrescarLista" text="Actualizar Lista" />
     </HBox>
 </VBox>
