@@ -3,32 +3,30 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <!--VISTA -->
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fancomponentes.LoginController">
-  <tabs>
-    <Tab text="Login">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="391.0" prefWidth="590.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fancomponentes.LoginController">
                <children>
-                  <ImageView fitHeight="134.0" fitWidth="195.0" layoutX="220.0" pickOnBounds="true" preserveRatio="true">
+                  <Button fx:id="loginButton" layoutX="218.0" layoutY="282.0" mnemonicParsing="false" onAction="#onLoginButtonClicked" prefHeight="35.0" prefWidth="130.0" text="Iniciar Sesión">
+                     <font>
+                        <Font name="Consolas Bold" size="14.0" />
+                     </font></Button>
+                  <TextField fx:id="usernameField" layoutX="194.0" layoutY="173.0" prefHeight="25.0" prefWidth="177.0" />
+                  <Label layoutX="237.0" layoutY="203.0" prefHeight="18.0" prefWidth="92.0" text="Contraseña" textFill="#fffbfb">
+                     <font>
+                        <Font name="Consolas Bold" size="15.0" />
+                     </font></Label>
+                  <Label layoutX="246.0" layoutY="139.0" prefHeight="26.0" prefWidth="74.0" text="Usuario" textFill="WHITE">
+                     <font>
+                        <Font name="Consolas Bold" size="15.0" />
+                     </font></Label>
+                  <PasswordField fx:id="passwordField" layoutX="192.0" layoutY="228.0" prefHeight="25.0" prefWidth="177.0" />
+                  <ImageView fitHeight="139.0" fitWidth="151.0" layoutX="207.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../img/logoFanComponentes.jpg" />
                      </image>
                   </ImageView>
-                  <Button fx:id="loginButton" layoutX="249.0" layoutY="286.0" mnemonicParsing="false" onAction="#onLoginButtonClicked" text="Iniciar Sesión" />
-                  <TextField fx:id="usernameField" layoutX="207.0" layoutY="173.0" prefHeight="25.0" prefWidth="170.0" />
-                  <Label layoutX="259.0" layoutY="203.0" text="Contraseña" />
-                  <Label layoutX="265.0" layoutY="147.0" prefHeight="17.0" prefWidth="54.0" text="Usuario" />
-                  <PasswordField fx:id="passwordField" layoutX="207.0" layoutY="220.0" prefHeight="25.0" prefWidth="169.0" />
-               </children></AnchorPane>
-      </content>
-    </Tab>
-    <Tab text="Arbol de navegabilidad">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-      </content>
-    </Tab>
-  </tabs>
-</TabPane>
+               </children>
+</AnchorPane>

@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
@@ -32,7 +33,15 @@ public class LoginController {
                 System.out.println("Inicio de sesión exitoso");
                 // Aquí puedes abrir una nueva ventana o realizar alguna acción después de iniciar sesión
             } else {
-                System.out.println("Credenciales incorrectas");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("Credenciales incorrectas. " +
+                        "El usuario con el que está intentando logearse no tiene permisos para acceder a la aplicación, " +
+                        "contacte con el CAU para poder solucionarlo");
+                alert.setHeaderText("ERROR DE LOGIN");
+                alert.showAndWait();
+
+               // System.out.println("Credenciales incorrectas");
                 // Aquí puedes mostrar un mensaje de error al usuario
             }
         } catch (SQLException e) {

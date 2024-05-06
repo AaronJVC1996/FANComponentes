@@ -40,8 +40,8 @@ public class Main extends Application {
                 System.err.println("Error al ejecutar la consulta SQL: " + e.getMessage());
             }
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("hello-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-            stage.setTitle("Hello!");
+            Scene scene = new Scene(fxmlLoader.load(), 600, 600);
+            stage.setTitle("LOGIN");
             stage.setScene(scene);
             stage.show();
         } else {
