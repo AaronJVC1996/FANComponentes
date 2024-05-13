@@ -1,31 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <!--VISTA -->
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="391.0" prefWidth="590.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fancomponentes.LoginController">
-    <children>
-        <Button fx:id="loginButton" layoutX="218.0" layoutY="282.0" mnemonicParsing="false" onAction="#onLoginButtonClicked" prefHeight="35.0" prefWidth="130.0" text="Iniciar Sesión">
-            <font>
-                <Font name="Consolas Bold" size="14.0" />
-            </font></Button>
-        <TextField fx:id="usernameField" layoutX="194.0" layoutY="173.0" prefHeight="25.0" prefWidth="177.0" />
-        <Label layoutX="237.0" layoutY="203.0" prefHeight="18.0" prefWidth="92.0" text="Contraseña" textFill="#fffbfb">
-            <font>
-                <Font name="Consolas Bold" size="15.0" />
-            </font></Label>
-        <Label layoutX="246.0" layoutY="139.0" prefHeight="26.0" prefWidth="74.0" text="Usuario" textFill="WHITE">
-            <font>
-                <Font name="Consolas Bold" size="15.0" />
-            </font></Label>
-        <PasswordField fx:id="passwordField" layoutX="192.0" layoutY="228.0" prefHeight="25.0" prefWidth="177.0" />
-        <ImageView fitHeight="139.0" fitWidth="151.0" layoutX="207.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../../../../../img/logoFanComponentes.jpg" />
-            </image>
-        </ImageView>
-    </children>
-</AnchorPane>
+
+<VBox alignment="CENTER" fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fancomponentes.LoginController">
+         <children>
+              <ImageView fitHeight="170.0" fitWidth="160.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                      <Image url="@../../../../../img/logoFanComponentes.jpg" />
+                  </image>
+         <VBox.margin>
+            <Insets bottom="20.0" />
+         </VBox.margin>
+              </ImageView>
+              <Label prefHeight="26.0" prefWidth="74.0" text="Usuario" textAlignment="CENTER" textFill="WHITE">
+                  <font>
+                      <Font name="Consolas Bold" size="15.0" />
+                  </font>
+         <VBox.margin>
+            <Insets bottom="10.0" top="10.0" />
+         </VBox.margin>
+            </Label>
+              <TextField fx:id="usernameField" alignment="CENTER" prefWidth="200.0">
+         <VBox.margin>
+            <Insets bottom="20.0" />
+         </VBox.margin></TextField>
+              <Label prefHeight="18.0" prefWidth="92.0" text="Contraseña" textAlignment="CENTER" textFill="#fffbfb">
+                  <font>
+                      <Font name="Consolas Bold" size="15.0" />
+                  </font>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+            </Label>
+              <PasswordField fx:id="passwordField" alignment="CENTER" prefWidth="200.0">
+         <VBox.margin>
+            <Insets bottom="20.0" />
+         </VBox.margin></PasswordField>
+              <Button fx:id="loginButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onLoginButtonClicked" prefHeight="35.0" prefWidth="130.0" text="Iniciar Sesión" textAlignment="CENTER">
+                  <font>
+                      <Font name="Consolas Bold" size="14.0" />
+                  </font>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+            </Button>
+         </children>
+</VBox>
