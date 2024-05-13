@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
@@ -36,7 +37,14 @@ public class LoginController {
                 // Cargar y mostrar la vista de gestión de almacén
                 cargarVistaGestionAlmacen();
             } else {
-                System.out.println("Credenciales incorrectas");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("Credenciales incorrectas. " +
+                        "El usuario con el que está intentando logearse no tiene permisos para acceder a la aplicación, " +
+                        "contacte con el CAU para poder solucionarlo");
+                alert.setHeaderText("ERROR DE LOGIN");
+                alert.showAndWait();
+               // System.out.println("Credenciales incorrectas");
                 // Aquí puedes mostrar un mensaje de error al usuario
             }
         } catch (SQLException e) {
