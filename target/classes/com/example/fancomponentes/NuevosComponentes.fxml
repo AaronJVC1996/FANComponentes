@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fancomponentes.NuevosComponentesController">
+    <padding>
+        <Insets bottom="20" left="20" right="20" top="20" />
+    </padding>
+    <Label alignment="CENTER" prefHeight="36.0" prefWidth="556.0" styleClass="title-label" text="AGREGAR NUEVO COMPONENTE" GridPane.columnIndex="0" GridPane.columnSpan="2">
+      <font>
+         <Font name="JetBrains Mono Light" size="14.0" />
+      </font></Label>
+
+    <Label fx:id="nombreLabel" text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <TextField fx:id="nombreTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+    <Label fx:id="cantidadLabel" text="Cantidad:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <TextField fx:id="cantidadTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+    <Label fx:id="precioLabel" text="Precio:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <TextField fx:id="precioTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+    <Label text="Descripción:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+    <TextArea fx:id="descripcionTextArea" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+    <Button fx:id="btnAgregar" onAction="#agregarComponente" prefHeight="32.0" prefWidth="109.0" style="-fx-font-size: 14pt;" text="AGREGAR" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+      <font>
+         <Font name="JetBrains Mono ExtraBold" size="13.0" />
+      </font></Button>
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>
