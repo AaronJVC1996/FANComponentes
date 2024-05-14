@@ -22,7 +22,7 @@
             <HBox.margin>
                 <Insets />
             </HBox.margin>
-        </TableView>
+        </>
 
         <VBox alignment="CENTER" maxHeight="351.0" prefHeight="351.0" prefWidth="332.0" spacing="10.0" VBox.vgrow="ALWAYS">
             <padding>

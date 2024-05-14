@@ -1,9 +1,14 @@
 package com.example.fancomponentes;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
 
 import java.sql.*;
 
@@ -101,14 +106,17 @@ public class GestionAlmacenController {
 
     }
     @FXML
-    private void aniadirComponente() {
+    private void aniadirComponente(ActionEvent event) {
 
+                try {
+                    // Cargar la vista para agregar nuevo componente desde su archivo FXML
+                    Parent agregar = FXMLLoader.load(getClass().getResource("NuevosComponentes.fxml"));
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(agregar));
+                    stage.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         //pendiente
-
-
-    }
-
-
-
-
-}
