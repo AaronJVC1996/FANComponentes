@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
@@ -14,7 +13,7 @@ import java.sql.*;
 
 public class GestionAlmacenController {
     @FXML
-    private TableView<String> componentesListView;
+    private TableView<Componente> componentesTableView;
 
     @FXML
     private TableColumn<String, Integer> idComponenteColumn;
@@ -38,9 +37,9 @@ public class GestionAlmacenController {
         cargarComponentes();
 
         // Configurar el listener para el evento de selección en el ListView (obtenido de internet)
-        componentesListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        componentesTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             // Mostrar los detalles del empleado seleccionado
-            mostrarDetallesComponentes(newValue);
+
         });
     }
 
@@ -61,7 +60,7 @@ public class GestionAlmacenController {
                     Componente componente = new Componente(id, nombre, stock, precio, descripcion);
 
                     // Add the Componente object to the ListView
-                    componentesListView.getItems().add(componente.getNombre()); // Displaying the name in the ListView
+                    componentesTableView.getItems().add(componente); // Displaying the name in the ListView
                 }
             }
         } catch (SQLException e) {
@@ -95,7 +94,7 @@ public class GestionAlmacenController {
     @FXML
     private void refrescarLista() {
         // limpia y vuelve a cargar los componentes
-        componentesListView.getItems().clear();
+        componentesTableView.getItems().clear();
         cargarComponentes();
     }
     @FXML
