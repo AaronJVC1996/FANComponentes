@@ -34,7 +34,7 @@ public class LoginController {
         idImagenLogo.setPreserveRatio(true);
 
         idImagenLogo.setFitWidth(200);
-        idImagenLogo.setFitHeight(200);
+        idImagenLogo.setFitHeight(300);
     }
 
 
