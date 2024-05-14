@@ -1,34 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <!--VISTA -->
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fancomponentes.LoginController">
-  <tabs>
-    <Tab text="Login">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <ImageView fitHeight="134.0" fitWidth="195.0" layoutX="220.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../../img/logoFanComponentes.jpg" />
-                     </image>
-                  </ImageView>
-                  <Button fx:id="loginButton" layoutX="249.0" layoutY="286.0" mnemonicParsing="false" onAction="#onLoginButtonClicked" text="Iniciar Sesión" />
-                  <TextField fx:id="usernameField" layoutX="207.0" layoutY="173.0" prefHeight="25.0" prefWidth="170.0" />
-                  <Label layoutX="259.0" layoutY="203.0" text="Contraseña" />
-                  <Label layoutX="265.0" layoutY="147.0" prefHeight="17.0" prefWidth="54.0" text="Usuario" />
-                  <PasswordField fx:id="passwordField" layoutX="207.0" layoutY="220.0" prefHeight="25.0" prefWidth="169.0" />
-               </children></AnchorPane>
-      </content>
-    </Tab>
-    <Tab text="Arbol de navegabilidad">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-      </content>
-    </Tab>
-  </tabs>
-</TabPane>
+<VBox alignment="CENTER" fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fancomponentes.LoginController">
+         <children>
+              <ImageView fitHeight="170.0" fitWidth="160.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                      <Image url="@../../../../../img/logoFanComponentes.jpg" />
+                  </image>
+         <VBox.margin>
+            <Insets bottom="20.0" />
+         </VBox.margin>
+              </ImageView>
+              <Label prefHeight="26.0" prefWidth="74.0" text="Usuario" textAlignment="CENTER" textFill="WHITE">
+                  <font>
+                      <Font name="Consolas Bold" size="15.0" />
+                  </font>
+         <VBox.margin>
+            <Insets bottom="10.0" top="10.0" />
+         </VBox.margin>
+            </Label>
+              <TextField fx:id="usernameField" alignment="CENTER" prefWidth="200.0">
+         <VBox.margin>
+            <Insets bottom="20.0" />
+         </VBox.margin></TextField>
+              <Label prefHeight="18.0" prefWidth="92.0" text="Contraseña" textAlignment="CENTER" textFill="#fffbfb">
+                  <font>
+                      <Font name="Consolas Bold" size="15.0" />
+                  </font>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+            </Label>
+              <PasswordField fx:id="passwordField" alignment="CENTER" prefWidth="200.0">
+         <VBox.margin>
+            <Insets bottom="20.0" />
+         </VBox.margin></PasswordField>
+              <Button fx:id="loginButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onLoginButtonClicked" prefHeight="35.0" prefWidth="130.0" text="Iniciar Sesión" textAlignment="CENTER">
+                  <font>
+                      <Font name="Consolas Bold" size="14.0" />
+                  </font>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+            </Button>
+         </children>
+</VBox>

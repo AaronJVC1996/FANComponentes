@@ -3,12 +3,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
 import java.sql.*;
 
 public class GestionAlmacenController {
     @FXML
-    private ListView<String> componentesListView;
+    private TableView<String> componentesListView;
 
     @FXML
     private TableColumn<String, Integer> idComponenteColumn;
