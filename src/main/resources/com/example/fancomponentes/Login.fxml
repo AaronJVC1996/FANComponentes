@@ -10,7 +10,7 @@
 
 <VBox alignment="CENTER" fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fancomponentes.LoginController">
          <children>
-              <ImageView fitHeight="170.0" fitWidth="160.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+              <ImageView fx:id="idImagenLogo" fitHeight="200.0" fitWidth="200.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
                   <image>
                       <Image url="@../../../../../img/logoFanComponentes.jpg" />
                   </image>

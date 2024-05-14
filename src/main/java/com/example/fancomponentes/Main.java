@@ -17,8 +17,8 @@ public class Main extends Application {
             Scene scene = new Scene(fxmlLoader.load(), 600, 600);
             stage.setTitle("Login");
             stage.setScene(scene);
-            stage.setMinHeight(600);
-            stage.setMinWidth(600);
+            stage.setMinHeight(450);
+            stage.setMinWidth(450);
             stage.show();
         }
 
