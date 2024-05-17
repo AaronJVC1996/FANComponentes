@@ -47,6 +47,14 @@ public class LoginController {
         try (Connection conexion = DatabaseConnector.getConexion()) {
             if (verificarCredenciales(username, password)) {
                 System.out.println("Inicio de sesión exitoso");
+                //Si inicio es correcto.
+                /* Stage stage =(Stage) root.getScene().getWindow();
+                try{
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/path/to/pantallaLoginCorrecto.fxml"));
+                    Parent root = loader.load();
+                }*/
+
+
                 // Cargar y mostrar la vista de gestión de almacén
                 cargarVistaGestionAlmacen();
             } else {
