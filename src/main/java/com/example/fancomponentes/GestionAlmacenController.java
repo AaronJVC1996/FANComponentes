@@ -5,28 +5,28 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.sql.*;
 
 public class GestionAlmacenController {
     @FXML
-    private TableView<String> componentesListView;
+    private TableView<Componente> componentesTableView;
 
     @FXML
-    private TableColumn<String, Integer> idComponenteColumn;
+    private TableColumn<Componente, String> idComponenteColumn;
 
     @FXML
-    private TableColumn<String, String> nombreColumn;
+    private TableColumn<Componente, String> nombreColumn;
 
     @FXML
-    private TableColumn<String, Integer> stockColumn;
+    private TableColumn<Componente, Integer> stockColumn;
 
     @FXML
-    private TableColumn<String, Double> precioColumn;
+    private TableColumn<Componente, Double> precioColumn;
 
 
     @FXML
@@ -38,9 +38,12 @@ public class GestionAlmacenController {
         cargarComponentes();
 
         // Configurar el listener para el evento de selección en el ListView (obtenido de internet)
-        componentesListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        componentesTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             // Mostrar los detalles del empleado seleccionado
-            mostrarDetallesComponentes(newValue);
+            idComponenteColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+            nombreColumn.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+            precioColumn.setCellValueFactory(new PropertyValueFactory<>("precio"));
+            stockColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         });
     }
 
@@ -61,7 +64,7 @@ public class GestionAlmacenController {
                     Componente componente = new Componente(id, nombre, stock, precio, descripcion);
 
                     // Add the Componente object to the ListView
-                    componentesListView.getItems().add(componente.getNombre()); // Displaying the name in the ListView
+                    this.componentesTableView.getItems().add(componente); // Displaying the name in the ListView
                 }
             }
         } catch (SQLException e) {
@@ -95,7 +98,7 @@ public class GestionAlmacenController {
     @FXML
     private void refrescarLista() {
         // limpia y vuelve a cargar los componentes
-        componentesListView.getItems().clear();
+        componentesTableView.getItems().clear();
         cargarComponentes();
     }
     @FXML

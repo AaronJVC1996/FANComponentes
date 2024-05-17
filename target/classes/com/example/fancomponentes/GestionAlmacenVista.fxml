@@ -57,6 +57,6 @@
         <padding>
             <Insets left="55" />
         </padding>
-        <Button fx:id="btnActualizar" onAction="#refrescarLista" prefHeight="25.0" prefWidth="161.0" text="Actualizar Lista" />
+        <Button fx:id="btnActualizar" onAction="#refrescarLista" text="Actualizar Lista" />
     </HBox>
 </VBox>

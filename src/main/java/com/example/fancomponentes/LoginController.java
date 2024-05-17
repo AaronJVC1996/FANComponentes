@@ -12,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class LoginController {
@@ -24,6 +25,18 @@ public class LoginController {
 
     @FXML
     private Button loginButton;
+
+    @FXML
+    private ImageView idImagenLogo;
+
+    @FXML
+    private void initialize() {
+        idImagenLogo.setPreserveRatio(true);
+
+        idImagenLogo.setFitWidth(200);
+        idImagenLogo.setFitHeight(300);
+    }
+
 
     // Método para verificar las credenciales del usuario
     @FXML
