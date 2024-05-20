@@ -102,9 +102,7 @@ public class GestionAlmacenController {
         cargarComponentes();
     }
     @FXML
-    private void aniadirStock() {
-
-
+    private void aniadirStock(ActionEvent event) {
         try {
             // Cargar la vista para agregar nuevo componente desde su archivo FXML
             Parent aniadir = FXMLLoader.load(getClass().getResource("AniadirStock.fxml"));
@@ -114,7 +112,6 @@ public class GestionAlmacenController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
     }
     @FXML

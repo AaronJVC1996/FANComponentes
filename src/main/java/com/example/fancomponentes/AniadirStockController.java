@@ -14,37 +14,44 @@ import java.sql.SQLException;
 public class AniadirStockController {
 
     @FXML
-    private TextField nombreTextField;
-    @FXML
     private TextField cantidadTextField;
 
     @FXML
     private Button btnAgregar;
+
     @FXML
     private void aniadirStock() {
-        int cantidad = Integer.parseInt(cantidadTextField.getText());
+        String cantidadStr = cantidadTextField.getText();
+        int cantidad;
+        try {
+            cantidad = Integer.parseInt(cantidadStr);
+        } catch (NumberFormatException e) {
+            mostrarAlerta("Error de formato", "La cantidad debe ser un número entero.");
+            return;
+        }
+
         try (Connection conexion = DatabaseConnector.getConexion()) {
-            // Consulta SQL para actualizar el stock
             String consulta = "UPDATE COMPONENTES SET STOCK = STOCK + ? WHERE NOMBRE = ?";
             try (PreparedStatement declaracion = conexion.prepareStatement(consulta)) {
-                // Establecer los parámetros en la consulta SQL
-                declaracion.setInt(1, cantidad); // Sumar la cantidad ingresada al stock existente
-                declaracion.setString(2, nombreTextField.getText()); // Obtener el nombre del componente del campo de texto
-                declaracion.executeUpdate(); // Ejecutar la consulta SQL
-                // Limpiar los campos después de la inserción
+                declaracion.setInt(1, cantidad);
+                declaracion.setString(2, "componente"); // Reemplaza con el nombre del componente
+                declaracion.executeUpdate();
                 cantidadTextField.clear();
-                // Mostrar mensaje de que va correctamente
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Cantidad Agregada");
-                alert.setContentText("La cantidad se ha agregado correctamente");
-                alert.showAndWait();
+                mostrarAlerta("Cantidad Agregada", "La cantidad se ha agregado correctamente");
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Manejar cualquier error que ocurra durante la inserción
+            mostrarAlerta("Error de base de datos", "No se pudo actualizar el stock.");
         }
-        // Cerrar la ventana de añadir stock después de la inserción
-        Stage stage = (Stage) btnAgregar.getScene().getWindow(); // Obtener la referencia de la ventana
+
+        Stage stage = (Stage) btnAgregar.getScene().getWindow();
         stage.close();
+    }
+
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 }
