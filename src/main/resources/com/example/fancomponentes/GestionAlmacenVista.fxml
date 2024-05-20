@@ -12,7 +12,7 @@
     </padding>
 
     <HBox prefWidth="463.0" spacing="10.0">
-        <TableView fx:id="componentesTableView" prefHeight="356.0" prefWidth="376.0">
+        <TableView fx:id="componentesTableView" prefHeight="356.0" prefWidth="376.0" stylesheets="@css/styles.css">
             <columns>
                 <TableColumn fx:id="idComponenteColumn" prefWidth="61.0" text="Id" />
                 <TableColumn fx:id="nombreColumn" prefWidth="121.0" text="Nombre" />

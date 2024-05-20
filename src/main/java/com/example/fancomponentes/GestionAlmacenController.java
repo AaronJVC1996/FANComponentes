@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -59,6 +60,8 @@ public class GestionAlmacenController {
 
         componentesTableView.refresh();
         cargarComponentes();
+
+        aplicarEstiloFilas();
     }
 
     // Metodo para cargar los nombres de los componentes desde la base de datos y mostrarlos en el ListView
@@ -162,6 +165,33 @@ public class GestionAlmacenController {
             descripcionText.setWrappingWidth(200);  // Ajusta el valor según necesites
             descripcionText.setText(selectedComponente.getDescripcion());
         }
+    }
+
+    private void aplicarEstiloFilas() {
+        componentesTableView.setRowFactory(tv -> new TableRow<Componente>() {
+            @Override
+            protected void updateItem(Componente item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null) {
+                    setStyle("");
+                } else {
+                    Integer stock = item.getStock(); // Usamos Integer en lugar de int
+                    if (stock == null) {
+                        setStyle("");
+                    } else {
+                        if (stock <= 5 && stock > 0) {
+                            getStyleClass().removeAll("low-stock", "out-of-stock");
+                            getStyleClass().add("low-stock");
+                        } else if (stock == 0) {
+                            getStyleClass().removeAll("low-stock", "out-of-stock");
+                            getStyleClass().add("out-of-stock");
+                        } else {
+                            getStyleClass().removeAll("low-stock", "out-of-stock");
+                        }
+                    }
+                }
+            }
+        });
     }
 
 
