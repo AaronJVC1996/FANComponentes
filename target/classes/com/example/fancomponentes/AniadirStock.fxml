@@ -7,6 +7,6 @@
 
 <VBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fancomponentes.AniadirStockController">
     <Label text="Añadir cantidad deseada"/>
-    <TextField fx:id="cantidadTextField" promptText="Cantidad"/>
-    <Button text="Agregar" onAction="#aniadirStock"/>
+    <TextField fx:id="stockTextField" promptText="Cantidad"/>
+    <Button fx:id="btnAgregar" text="Agregar" onAction="#aniadirStock"/>
 </VBox>

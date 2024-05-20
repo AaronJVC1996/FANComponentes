@@ -3,7 +3,6 @@ package com.example.fancomponentes;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -14,14 +13,19 @@ import java.sql.SQLException;
 public class AniadirStockController {
 
     @FXML
-    private TextField cantidadTextField;
+    private TextField stockTextField;
 
     @FXML
     private Button btnAgregar;
 
+    private String componenteId;
+
+    public void setComponenteId(String id) {
+        this.componenteId = id;
+    }
     @FXML
     private void aniadirStock() {
-        String cantidadStr = cantidadTextField.getText();
+        String cantidadStr = stockTextField.getText();
         int cantidad;
         try {
             cantidad = Integer.parseInt(cantidadStr);
@@ -31,12 +35,12 @@ public class AniadirStockController {
         }
 
         try (Connection conexion = DatabaseConnector.getConexion()) {
-            String consulta = "UPDATE COMPONENTES SET STOCK = STOCK + ? WHERE NOMBRE = ?";
+            String consulta = "UPDATE componentes SET stock = stock + ? WHERE idcomponente = ?";
             try (PreparedStatement declaracion = conexion.prepareStatement(consulta)) {
                 declaracion.setInt(1, cantidad);
-                declaracion.setString(2, "componente"); // Reemplaza con el nombre del componente
+                declaracion.setString(2, componenteId);
                 declaracion.executeUpdate();
-                cantidadTextField.clear();
+                stockTextField.clear();
                 mostrarAlerta("Cantidad Agregada", "La cantidad se ha agregado correctamente");
             }
         } catch (SQLException e) {

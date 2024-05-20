@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -119,12 +119,29 @@ public class GestionAlmacenController {
         cargarComponentes();
     }
     @FXML
-    private void aniadirStock() {
+        private void aniadirStock() {
+            Componente componenteSeleccionado = componentesTableView.getSelectionModel().getSelectedItem();
+            if (componenteSeleccionado != null) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("AniadirStock.fxml"));
+                    Parent root = loader.load();
 
-        //pendiente
+                    AniadirStockController controller = loader.getController();
+                    controller.setComponenteId(componenteSeleccionado.getId());
 
-
-    }
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Ningún Componente Seleccionado");
+                alert.setContentText("Por favor, selecciona un componente para añadir stock.");
+                alert.showAndWait();
+            }
+        }
     @FXML
     private void aniadirComponente(ActionEvent event) {
 
