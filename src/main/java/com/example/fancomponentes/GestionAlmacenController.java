@@ -9,6 +9,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.scene.text.Text;
+import javafx.scene.input.MouseEvent;
+
 
 import java.sql.*;
 
@@ -30,21 +33,32 @@ public class GestionAlmacenController {
 
 
     @FXML
-    private Label descripcionLabel;
+    private Text descripcionText;
 
     @FXML
     private void initialize() {
+
+
+
         // Cargar los nombres de los componentes desde la base de datos
-        cargarComponentes();
+
 
         // Configurar el listener para el evento de selección en el ListView (obtenido de internet)
         componentesTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             // Mostrar los detalles del empleado seleccionado
             idComponenteColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+
             nombreColumn.setCellValueFactory(new PropertyValueFactory<>("nombre"));
             precioColumn.setCellValueFactory(new PropertyValueFactory<>("precio"));
             stockColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
+
+            componentesTableView.setOnMouseClicked(this::mostrarDescripcion);
+
+
         });
+
+        componentesTableView.refresh();
+        cargarComponentes();
     }
 
     // Metodo para cargar los nombres de los componentes desde la base de datos y mostrarlos en el ListView
@@ -85,16 +99,19 @@ public class GestionAlmacenController {
                     nombreColumn.setText(resultado.getString("nombre"));
                     stockColumn.setText(resultado.getString("stock"));
                     precioColumn.setText(resultado.getString("precio"));
-                    descripcionLabel.setText(resultado.getString("descripcion"));
+                    descripcionText.setText(resultado.getString("descripcion"));
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    // Metodo para eliminar un empleado seleccionado
+
 
     // Actualizar componentes
+
+
+
     @FXML
     private void refrescarLista() {
         // limpia y vuelve a cargar los componentes
@@ -104,16 +121,7 @@ public class GestionAlmacenController {
     @FXML
     private void aniadirStock() {
 
-
-        try {
-            // Cargar la vista para agregar nuevo componente desde su archivo FXML
-            Parent aniadir = FXMLLoader.load(getClass().getResource("AniadirStock.fxml"));
-            Stage stage = new Stage();
-            stage.setScene(new Scene(aniadir));
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //pendiente
 
 
     }
@@ -130,4 +138,14 @@ public class GestionAlmacenController {
                     e.printStackTrace();
                 }
             }
+    @FXML
+    private void mostrarDescripcion(MouseEvent event) {
+        Componente selectedComponente = componentesTableView.getSelectionModel().getSelectedItem();
+        if (selectedComponente != null) {
+            descripcionText.setWrappingWidth(200);  // Ajusta el valor según necesites
+            descripcionText.setText(selectedComponente.getDescripcion());
         }
+    }
+
+
+}
