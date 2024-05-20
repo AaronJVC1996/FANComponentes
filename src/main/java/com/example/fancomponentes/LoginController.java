@@ -1,9 +1,12 @@
 package com.example.fancomponentes;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class LoginController {
 
@@ -47,16 +51,10 @@ public class LoginController {
         try (Connection conexion = DatabaseConnector.getConexion()) {
             if (verificarCredenciales(username, password)) {
                 System.out.println("Inicio de sesión exitoso");
-                //Si inicio es correcto.
-                /* Stage stage =(Stage) root.getScene().getWindow();
-                try{
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/path/to/pantallaLoginCorrecto.fxml"));
-                    Parent root = loader.load();
-                }*/
+                cargarVistaLoginCorrecto();
 
-
-                // Cargar y mostrar la vista de gestión de almacén
-                cargarVistaGestionAlmacen();
+                // Cargar y mostrar la vista de gestión de almacén (esto es de la anterior)
+                // cargarVistaGestionAlmacen();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -92,8 +90,10 @@ public class LoginController {
             // Cargar la vista de gestión de almacén desde el archivo FXML
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GestionAlmacenVista.fxml"));
             Parent root = fxmlLoader.load();
+
             // Obtener el controlador de la vista de gestión de almacén
             GestionAlmacenController controller = fxmlLoader.getController();
+
             // Crear una nueva escena
             Scene scene = new Scene(root);
             // Obtener la ventana actual y establecer la escena en ella
@@ -104,5 +104,38 @@ public class LoginController {
             e.printStackTrace();
             // Manejar cualquier error de E/S al cargar la vista de gestión de almacén
         }
+    }
+
+    //Método para cargar y mostrar la vista de loginCorrecto, pantalla de cargando..
+    private void cargarVistaLoginCorrecto() {
+        try{
+            // Verificar la ruta del archivo FXML
+            URL fxmlLocation = getClass().getResource("pantallaLoginCorrecto.fxml");
+            System.out.println("FXML Location: " + fxmlLocation); // Verifica que no sea null
+
+            //Cargar la pantalla de cargando desde el archivo fxml
+            FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
+            Parent root = fxmlLoader.load();
+
+            // Crear nueva escena y establecerla en la actual
+
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) loginButton.getScene().getWindow();
+            stage.setScene(scene);
+            //stage.show();
+
+            //Aqui ponemos los segundos de transicion entre el login y la vista de gestionAlmacen.
+            iniciarTransicion();
+        } catch (IOException e) {
+            //throw new RuntimeException(e);
+            e.printStackTrace();
+        }
+    }
+
+
+    private void iniciarTransicion() {
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished(event -> cargarVistaGestionAlmacen());
+        delay.play();
     }
 }
