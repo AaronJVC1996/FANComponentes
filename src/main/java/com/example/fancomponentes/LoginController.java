@@ -84,31 +84,6 @@ public class LoginController {
         }
     }
 
-    // Método para cargar y mostrar la vista de gestión de almacén
-    private void cargarVistaGestionAlmacen() {
-        try {
-            // Cargar la vista de gestión de almacén desde el archivo FXML
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GestionAlmacenVista.fxml"));
-            Parent root = fxmlLoader.load();
-
-            // Obtener el controlador de la vista de gestión de almacén
-            GestionAlmacenController controller = fxmlLoader.getController();
-
-            // Crear una nueva escena
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-
-            Stage stageActual = (Stage) loginButton.getScene().getWindow();
-
-            stage.show();
-            stageActual.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Manejar cualquier error de E/S al cargar la vista de gestión de almacén
-        }
-    }
 
     //Método para cargar y mostrar la vista de loginCorrecto, pantalla de cargando..
     private void cargarVistaLoginCorrecto() {
@@ -133,18 +108,10 @@ public class LoginController {
             stageActual.close();
 
 
-            //Aqui ponemos los segundos de transicion entre el login y la vista de gestionAlmacen.
-            iniciarTransicion();
         } catch (IOException e) {
             //throw new RuntimeException(e);
             e.printStackTrace();
         }
     }
 
-
-    private void iniciarTransicion() {
-        PauseTransition delay = new PauseTransition(Duration.seconds(2));
-        delay.setOnFinished(event -> cargarVistaGestionAlmacen());
-        delay.play();
-    }
 }
