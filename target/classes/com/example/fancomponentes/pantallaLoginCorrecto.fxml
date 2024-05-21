@@ -10,7 +10,7 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: BLACK;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fancomponentes.pantallaLoginCorrectoController">
    <children>
       <ProgressIndicator layoutX="294.0" layoutY="208.0" prefHeight="46.0" prefWidth="33.0" />
-      <Label contentDisplay="CENTER" layoutX="74.0" layoutY="14.0" lineSpacing="2.0" prefHeight="217.0" prefWidth="472.0" text="FAN COMPONENTES" textAlignment="CENTER">
+      <Label fx:id="idNombreApp" contentDisplay="CENTER" layoutX="74.0" layoutY="14.0" lineSpacing="2.0" prefHeight="217.0" prefWidth="472.0" text="FAN COMPONENTES" textAlignment="CENTER">
          <textFill>
             <RadialGradient centerX="0.3812154696132597" centerY="0.6374407582938391" cycleMethod="REPEAT" focusAngle="161.57" focusDistance="1.0" radius="0.4367816091954023">
                <stops>
