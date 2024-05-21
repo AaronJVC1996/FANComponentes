@@ -96,9 +96,13 @@ public class LoginController {
 
             // Crear una nueva escena
             Scene scene = new Scene(root);
-            // Obtener la ventana actual y establecer la escena en ella
-            Stage stage = (Stage) loginButton.getScene().getWindow();
+            Stage stage = new Stage();
             stage.setScene(scene);
+
+            Stage stageActual = (Stage) loginButton.getScene().getWindow();
+
+            stage.show();
+            stageActual.close();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -120,9 +124,14 @@ public class LoginController {
             // Crear nueva escena y establecerla en la actual
 
             Scene scene = new Scene(root);
-            Stage stage = (Stage) loginButton.getScene().getWindow();
+            Stage stage = new Stage();
             stage.setScene(scene);
-            //stage.show();
+
+            Stage stageActual = (Stage) loginButton.getScene().getWindow();
+
+            stage.show();
+            stageActual.close();
+
 
             //Aqui ponemos los segundos de transicion entre el login y la vista de gestionAlmacen.
             iniciarTransicion();
