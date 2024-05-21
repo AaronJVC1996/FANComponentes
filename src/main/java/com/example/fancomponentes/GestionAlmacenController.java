@@ -172,27 +172,22 @@ public class GestionAlmacenController {
             @Override
             protected void updateItem(Componente item, boolean empty) {
                 super.updateItem(item, empty);
-                if (item == null) {
+                if (item == null || empty) {
                     setStyle("");
+                    getStyleClass().removeAll("low-stock", "out-of-stock");
                 } else {
                     Integer stock = item.getStock(); // Usamos Integer en lugar de int
+                    getStyleClass().removeAll("low-stock", "out-of-stock");
                     if (stock == null) {
                         setStyle("");
-                    } else {
-                        if (stock <= 5 && stock > 0) {
-                            getStyleClass().removeAll("low-stock", "out-of-stock");
-                            getStyleClass().add("low-stock");
-                        } else if (stock == 0) {
-                            getStyleClass().removeAll("low-stock", "out-of-stock");
-                            getStyleClass().add("out-of-stock");
-                        } else {
-                            getStyleClass().removeAll("low-stock", "out-of-stock");
-                        }
+                    } else if (stock <= 5 && stock > 0) {
+                        getStyleClass().add("low-stock");
+                    } else if (stock == 0) {
+                        getStyleClass().add("out-of-stock");
                     }
                 }
             }
         });
     }
-
 
 }
