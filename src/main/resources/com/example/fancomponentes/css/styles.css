@@ -1,0 +1,8 @@
+.table-row-cell.low-stock {
+    -fx-background-color: yellow;
+}
+
+
+.table-row-cell.out-of-stock {
+    -fx-background-color: red;
+}

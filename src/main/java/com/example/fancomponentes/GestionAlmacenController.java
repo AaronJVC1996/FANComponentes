@@ -4,11 +4,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.scene.text.Text;
+import javafx.scene.input.MouseEvent;
+
 
 import java.sql.*;
 
@@ -30,21 +34,34 @@ public class GestionAlmacenController {
 
 
     @FXML
-    private Label descripcionLabel;
+    private Text descripcionText;
 
     @FXML
     private void initialize() {
+
+
+
         // Cargar los nombres de los componentes desde la base de datos
-        cargarComponentes();
+
 
         // Configurar el listener para el evento de selección en el ListView (obtenido de internet)
         componentesTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             // Mostrar los detalles del empleado seleccionado
             idComponenteColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+
             nombreColumn.setCellValueFactory(new PropertyValueFactory<>("nombre"));
             precioColumn.setCellValueFactory(new PropertyValueFactory<>("precio"));
             stockColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
+
+            componentesTableView.setOnMouseClicked(this::mostrarDescripcion);
+
+
         });
+
+        componentesTableView.refresh();
+        cargarComponentes();
+
+        aplicarEstiloFilas();
     }
 
     // Metodo para cargar los nombres de los componentes desde la base de datos y mostrarlos en el ListView
@@ -85,16 +102,19 @@ public class GestionAlmacenController {
                     nombreColumn.setText(resultado.getString("nombre"));
                     stockColumn.setText(resultado.getString("stock"));
                     precioColumn.setText(resultado.getString("precio"));
-                    descripcionLabel.setText(resultado.getString("descripcion"));
+                    descripcionText.setText(resultado.getString("descripcion"));
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    // Metodo para eliminar un empleado seleccionado
+
 
     // Actualizar componentes
+
+
+
     @FXML
     private void refrescarLista() {
         // limpia y vuelve a cargar los componentes
@@ -102,21 +122,29 @@ public class GestionAlmacenController {
         cargarComponentes();
     }
     @FXML
-    private void aniadirStock() {
+        private void aniadirStock() {
+            Componente componenteSeleccionado = componentesTableView.getSelectionModel().getSelectedItem();
+            if (componenteSeleccionado != null) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("AniadirStock.fxml"));
+                    Parent root = loader.load();
 
+                    AniadirStockController controller = loader.getController();
+                    controller.setComponenteId(componenteSeleccionado.getId());
 
-        try {
-            // Cargar la vista para agregar nuevo componente desde su archivo FXML
-            Parent aniadir = FXMLLoader.load(getClass().getResource("AniadirStock.fxml"));
-            Stage stage = new Stage();
-            stage.setScene(new Scene(aniadir));
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Ningún Componente Seleccionado");
+                alert.setContentText("Por favor, selecciona un componente para añadir stock.");
+                alert.showAndWait();
+            }
         }
-
-
-    }
     @FXML
     private void aniadirComponente(ActionEvent event) {
 
@@ -130,4 +158,41 @@ public class GestionAlmacenController {
                     e.printStackTrace();
                 }
             }
+    @FXML
+    private void mostrarDescripcion(MouseEvent event) {
+        Componente selectedComponente = componentesTableView.getSelectionModel().getSelectedItem();
+        if (selectedComponente != null) {
+            descripcionText.setWrappingWidth(200);  // Ajusta el valor según necesites
+            descripcionText.setText(selectedComponente.getDescripcion());
         }
+    }
+
+    private void aplicarEstiloFilas() {
+        componentesTableView.setRowFactory(tv -> new TableRow<Componente>() {
+            @Override
+            protected void updateItem(Componente item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null) {
+                    setStyle("");
+                } else {
+                    Integer stock = item.getStock(); // Usamos Integer en lugar de int
+                    if (stock == null) {
+                        setStyle("");
+                    } else {
+                        if (stock <= 5 && stock > 0) {
+                            getStyleClass().removeAll("low-stock", "out-of-stock");
+                            getStyleClass().add("low-stock");
+                        } else if (stock == 0) {
+                            getStyleClass().removeAll("low-stock", "out-of-stock");
+                            getStyleClass().add("out-of-stock");
+                        } else {
+                            getStyleClass().removeAll("low-stock", "out-of-stock");
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+
+}

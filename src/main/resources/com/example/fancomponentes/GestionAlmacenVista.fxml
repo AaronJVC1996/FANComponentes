@@ -12,7 +12,7 @@
     </padding>
 
     <HBox prefWidth="463.0" spacing="10.0">
-        <TableView fx:id="componentesTableView" prefHeight="356.0" prefWidth="376.0">
+        <TableView fx:id="componentesTableView" prefHeight="356.0" prefWidth="376.0" stylesheets="@css/styles.css">
             <columns>
                 <TableColumn fx:id="idComponenteColumn" prefWidth="61.0" text="Id" />
                 <TableColumn fx:id="nombreColumn" prefWidth="121.0" text="Nombre" />
@@ -38,12 +38,12 @@
                 </children>
             </HBox>
 
-            <Label prefHeight="108.0" prefWidth="199.0" text="" wrapText="true">
-                <padding>
-                    <Insets top="20.0" />
-                </padding>
-                <maxWidth>300.0</maxWidth>
-            </Label>
+            <ScrollPane prefHeight="500.0" prefWidth="218.0" VBox.vgrow="ALWAYS">
+                <content>
+                    <Text fx:id="descripcionText" wrappingWidth="200" />
+                </content>
+            </ScrollPane>
+
             <HBox alignment="CENTER" prefHeight="25.0" prefWidth="255.0" spacing="50.0">
                 <Button fx:id="btnAnadir" onAction="#aniadirStock" prefHeight="25.0" prefWidth="89.0" text="Añadir" textAlignment="CENTER" textFill="#42b55f" textOverrun="CLIP" />
                 <Button fx:id="btnNuevoCom" onAction="#aniadirComponente" prefHeight="25.0" prefWidth="149.0" text="Nuevo Componente" />
