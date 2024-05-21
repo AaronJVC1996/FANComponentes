@@ -90,25 +90,7 @@ public class GestionAlmacenController {
     }
 
 
-    private void mostrarDetallesComponentes(String nombreComponente) {
-        // Consulta ala base de datos para saber los detalles de los componentes
-        try (Connection conexion = DatabaseConnector.getConexion()) {
-            String consulta = "SELECT idcomponente, nombre, stock, precio, descripcion FROM componentes WHERE nombre = ?";
-            try (PreparedStatement declaracion = conexion.prepareStatement(consulta)) {
-                declaracion.setString(1, nombreComponente);
-                ResultSet resultado = declaracion.executeQuery();
-                if (resultado.next()) {
-                    idComponenteColumn.setText(resultado.getString("idcomponente"));
-                    nombreColumn.setText(resultado.getString("nombre"));
-                    stockColumn.setText(resultado.getString("stock"));
-                    precioColumn.setText(resultado.getString("precio"));
-                    descripcionText.setText(resultado.getString("descripcion"));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+
 
 
     // Actualizar componentes
