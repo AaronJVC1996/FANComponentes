@@ -13,12 +13,13 @@ import java.sql.SQLException;
 import javafx.stage.Stage;
 
 public class NuevosComponentesController {
-
+    @FXML
+    private TextField idComponenteTextField;
     @FXML
     private TextField nombreTextField;
 
     @FXML
-    private TextField cantidadTextField;
+    private TextField stockTextField;
 
     @FXML
     private TextField precioTextField;
@@ -30,22 +31,25 @@ public class NuevosComponentesController {
     private Button btnAgregar;
     @FXML
     private void agregarComponente() {
+        String idComponente = idComponenteTextField.getText();
         String nombre = nombreTextField.getText();
-        int cantidad = Integer.parseInt(cantidadTextField.getText());
+        int stock = Integer.parseInt(stockTextField.getText());
         double precio = Double.parseDouble(precioTextField.getText());
         String descripcion = descripcionTextArea.getText();
         try (Connection conexion = DatabaseConnector.getConexion()) {
-            String consulta = "INSERT INTO componentes (nombre, cantidad, precio, descripcion) VALUES (?, ?, ?, ?)";
+            String consulta = "INSERT INTO componentes (idcomponente, nombre, stock, precio, descripcion) VALUES (?, ?, ?, ?, ?)";
             try (PreparedStatement declaracion = conexion.prepareStatement(consulta)) {
-                declaracion.setString(1, nombre);
-                declaracion.setInt(2, cantidad);
-                declaracion.setDouble(3, precio);
-                declaracion.setString(4, descripcion);
+                declaracion.setString(1, idComponente);
+                declaracion.setString(2, nombre);
+                declaracion.setInt(3, stock);
+                declaracion.setDouble(4, precio);
+                declaracion.setString(5, descripcion);
                 declaracion.executeUpdate();
 
                 // Limpiar los campos después de la inserción
+                idComponenteTextField.clear();
                 nombreTextField.clear();
-                cantidadTextField.clear();
+                stockTextField.clear();
                 precioTextField.clear();
                 descripcionTextArea.clear();
 
@@ -62,6 +66,4 @@ public class NuevosComponentesController {
         Stage stage = (Stage) btnAgregar.getScene().getWindow(); // Obtener la referencia de la ventana
         stage.close();
     }
-
-
 }
