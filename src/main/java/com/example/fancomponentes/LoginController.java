@@ -63,7 +63,7 @@ public class LoginController {
                         "contacte con el CAU para poder solucionarlo");
                 alert.setHeaderText("ERROR DE LOGIN");
                 alert.showAndWait();
-               // System.out.println("Credenciales incorrectas");
+                // System.out.println("Credenciales incorrectas");
                 // Aquí puedes mostrar un mensaje de error al usuario
             }
         } catch (SQLException e) {
