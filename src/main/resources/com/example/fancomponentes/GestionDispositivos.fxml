@@ -3,7 +3,6 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
 <VBox alignment="CENTER_LEFT" prefHeight="431.0" prefWidth="612.0" spacing="10.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fancomponentes.GestionDispositivosController">
 
@@ -25,11 +24,30 @@
             </HBox.margin>
         </TableView>
 
-        <!-- Menú de Componentes -->
+        <!-- Menú de Componentes y Dispositivos -->
         <VBox alignment="CENTER_LEFT" maxHeight="351.0" prefHeight="351.0" prefWidth="332.0" spacing="10.0" VBox.vgrow="ALWAYS">
             <padding>
                 <Insets left="20" top="10" />
             </padding>
+
+            <!-- Lista de Dispositivos con Scroll -->
+            <Label text="Manual" />
+             <Button fx:id="btnAgregarEditar" onAction="#agregarEditarDispositivo" text="Agregar/Editar" />
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                <ScrollPane prefHeight="150.0" prefWidth="300.0">
+                    <VBox fx:id="dispositivosVBox" spacing="5.0" />
+                </ScrollPane>
+            </HBox>
+
+            <!-- Tabla de Componentes Añadidos -->
+            <Label text="Componentes Añadidos" />
+            <TableView fx:id="addedComponentesTableView" prefHeight="150.0" prefWidth="300.0">
+                <columns>
+                    <TableColumn fx:id="addedIdComponenteColumn" prefWidth="61.0" text="Id" />
+                    <TableColumn fx:id="addedNombreColumn" prefWidth="121.0" text="Nombre" />
+                    <TableColumn fx:id="addedCantidadColumn" prefWidth="45.0" text="Cantidad" />
+                </columns>
+            </TableView>
 
             <!-- Botones para Sumar/Restar y Construir -->
             <HBox prefHeight="100.0" prefWidth="190.0" spacing="10.0">
