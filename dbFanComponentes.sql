@@ -30,12 +30,13 @@ CREATE TABLE MANUAL (
 );
 
 CREATE TABLE DISPOSITIVOS(
-                             N_DISPOSITIVO INT PRIMARY KEY,
+                             N_DISPOSITIVO INT,
                              N_MANUAL int,
                              NOMBRE VARCHAR(50),
                              PRECIO DOUBLE,
                              DESCRIPCION VARCHAR(200),
-                             CONSTRAINT DIS_FK1 FOREIGN KEY (N_MANUAL) REFERENCES MANUAL(N_MANUAL)
+                             CONSTRAINT DIS_FK1 FOREIGN KEY (N_MANUAL) REFERENCES MANUAL(N_MANUAL),
+                             PRIMARY KEY (N_DISPOSITIVO,N_MANUAL)
 );
 
 
