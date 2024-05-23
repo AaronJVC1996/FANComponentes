@@ -5,10 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -42,6 +39,8 @@ public class GestionDispositivosController {
         @FXML
         private Text descripcionText;
 
+        @FXML
+        private Label lblTotalPrecio;
         @FXML
         private void initialize() {
 
@@ -182,6 +181,24 @@ public class GestionDispositivosController {
             });
         }
 
+
+    // Método para sumar stock de un componente seleccionado
+    @FXML
+    private void sumarStock() {
+        // Lógica para sumar stock
+    }
+
+    // Método para restar stock de un componente seleccionado
+    @FXML
+    private void restarStock() {
+        // Lógica para restar stock
+    }
+
+    // Método para construir con los componentes seleccionados
+    @FXML
+    private void construir() {
+        // Lógica para construir con los componentes seleccionados
+    }
 
     }
 

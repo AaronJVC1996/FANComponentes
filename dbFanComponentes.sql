@@ -23,8 +23,6 @@ CREATE TABLE COMPONENTES(
 
 CREATE TABLE MANUAL (
                         N_MANUAL INT,
-                        CLIENTE VARCHAR(4),
-                        CONSTRAINT PRE_FK1 FOREIGN KEY (CLIENTE) REFERENCES ROLES(IDROL),
                         COMPONENTE VARCHAR(7),
                         CONSTRAINT PRE_FK2 FOREIGN KEY (COMPONENTE) REFERENCES COMPONENTES(IDCOMPONENTE),
                         CANTIDAD INT,
@@ -33,17 +31,12 @@ CREATE TABLE MANUAL (
 
 CREATE TABLE DISPOSITIVOS(
                              N_DISPOSITIVO INT PRIMARY KEY,
+                             N_MANUAL int,
                              NOMBRE VARCHAR(50),
                              PRECIO DOUBLE,
                              DESCRIPCION VARCHAR(200),
-                             CONSTRAINT DIS_FK1 FOREIGN KEY (N_DISPOSITIVO) REFERENCES MANUAL(N_MANUAL)
+                             CONSTRAINT DIS_FK1 FOREIGN KEY (N_MANUAL) REFERENCES MANUAL(N_MANUAL)
 );
-
-
-
-
-
-
 
 
 

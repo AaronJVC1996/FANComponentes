@@ -12,6 +12,7 @@
     </padding>
 
     <HBox prefWidth="463.0" spacing="10.0">
+        <!-- Table View -->
         <TableView fx:id="componentesTableView" prefHeight="356.0" prefWidth="376.0" stylesheets="@css/styles.css">
             <columns>
                 <TableColumn fx:id="idComponenteColumn" prefWidth="61.0" text="Id" />
@@ -24,36 +25,26 @@
             </HBox.margin>
         </TableView>
 
-        <VBox alignment="CENTER" maxHeight="351.0" prefHeight="351.0" prefWidth="332.0" spacing="10.0" VBox.vgrow="ALWAYS">
+        <!-- Menú de Componentes -->
+        <VBox alignment="CENTER_LEFT" maxHeight="351.0" prefHeight="351.0" prefWidth="332.0" spacing="10.0" VBox.vgrow="ALWAYS">
             <padding>
                 <Insets left="20" top="10" />
             </padding>
-            <HBox prefHeight="100.0" prefWidth="190.0">
-                <children>
-                    <Label prefHeight="41.0" prefWidth="230.0" text="Descripcion del componente">
-                        <font>
-                            <Font name="Corbel" size="18.0" />
-                        </font>
-                    </Label>
-                </children>
+
+            <!-- Botones para Sumar/Restar y Construir -->
+            <HBox prefHeight="100.0" prefWidth="190.0" spacing="10.0">
+                <Button fx:id="btnSumar" onAction="#sumarStock" prefHeight="25.0" prefWidth="50.0" text="+" />
+                <Button fx:id="btnRestar" onAction="#restarStock" prefHeight="25.0" prefWidth="50.0" text="-" />
+                <Button fx:id="btnConstruir" onAction="#construir" prefHeight="25.0" prefWidth="100.0" text="Construir" />
             </HBox>
 
-            <ScrollPane minHeight="150.0" prefHeight="300.0" prefWidth="218.0" VBox.vgrow="ALWAYS">
+            <!-- Total del Precio -->
+            <Label fx:id="lblTotalPrecio" text="Total: 0.0" />
 
-                <VBox.margin>
-                    <Insets top="50.0" />
-                </VBox.margin>
-            </ScrollPane>
-
-            <HBox alignment="CENTER" prefHeight="25.0" prefWidth="255.0" spacing="50.0">
-                <Button fx:id="btnAnadir" onAction="#aniadirStock" prefHeight="25.0" prefWidth="89.0" text="Añadir" textAlignment="CENTER" textFill="#42b55f" textOverrun="CLIP" />
-                <Button fx:id="btnNuevoCom" onAction="#aniadirComponente" prefHeight="25.0" prefWidth="149.0" text="Nuevo Componente" />
-                <VBox.margin>
-                    <Insets top="200.0" />
-                </VBox.margin>
-            </HBox>
         </VBox>
     </HBox>
+
+    <!-- Botón para Actualizar Lista -->
     <HBox>
         <padding>
             <Insets left="55" />
