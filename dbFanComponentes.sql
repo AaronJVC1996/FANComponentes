@@ -21,23 +21,24 @@ CREATE TABLE COMPONENTES(
                             DESCRIPCION VARCHAR(1000)
 );
 
-CREATE TABLE MANUAL (
-                        N_MANUAL INT,
-                        COMPONENTE VARCHAR(7),
-                        CONSTRAINT PRE_FK2 FOREIGN KEY (COMPONENTE) REFERENCES COMPONENTES(IDCOMPONENTE),
-                        CANTIDAD INT,
-                        PRIMARY KEY(N_MANUAL,COMPONENTE)
-);
 
 CREATE TABLE DISPOSITIVOS(
                              N_DISPOSITIVO INT,
-                             N_MANUAL int,
                              NOMBRE VARCHAR(50),
                              PRECIO DOUBLE,
                              DESCRIPCION VARCHAR(200),
-                             CONSTRAINT DIS_FK1 FOREIGN KEY (N_MANUAL) REFERENCES MANUAL(N_MANUAL),
-                             PRIMARY KEY (N_DISPOSITIVO,N_MANUAL)
+                             CANTIDAD INT,
+                             PRIMARY KEY (N_DISPOSITIVO)
 );
+CREATE TABLE MANUAL (
+                        N_DISPOSITIVO INT,
+                        COMPONENTE VARCHAR(7),
+                        CANTIDAD INT,
+                        CONSTRAINT MAN_FK2 FOREIGN KEY (COMPONENTE) REFERENCES COMPONENTES(IDCOMPONENTE),
+                        CONSTRAINT MAN_FK1 FOREIGN KEY (N_DISPOSITIVO) REFERENCES DISPOSITIVOS(N_DISPOSITIVO),
+                        PRIMARY KEY(N_DISPOSITIVO,COMPONENTE)
+);
+
 
 
 
