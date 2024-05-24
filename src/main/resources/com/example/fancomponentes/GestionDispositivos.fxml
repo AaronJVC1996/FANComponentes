@@ -15,11 +15,11 @@
         <!-- Table View de Dispositivos -->
         <TableView fx:id="dispositivosTableView" prefHeight="580.0" prefWidth="400.0">
             <columns>
-                <TableColumn fx:id="nDispositivoColumn" prefWidth="88.0" text="N. Dispositivo" />
+                <TableColumn fx:id="idColumn" prefWidth="88.0" text="N. Dispositivo" />
                 <TableColumn fx:id="nombreColumn" prefWidth="112.0" text="Nombre" />
                 <TableColumn fx:id="precioColumn" prefWidth="98.0" text="Precio" />
-                <TableColumn fx:id="cantidadColumn" prefWidth="62.0" text="Cantidad" />
-                <TableColumn fx:id="descripcionColumn" prefWidth="120.0" text="Descripción" />
+                <TableColumn fx:id="stockColumn" prefWidth="62.0" text="Cantidad" />
+
             </columns>
         </TableView>
 

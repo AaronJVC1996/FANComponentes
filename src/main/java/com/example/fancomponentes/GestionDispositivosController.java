@@ -9,10 +9,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -39,7 +38,7 @@ public class GestionDispositivosController {
     private TableColumn<Dispositivo, Integer> stockColumn;
 
     @FXML
-    private Text descripcionText;
+    private TextArea detalleDescripcionTextArea;
 
     @FXML
     private void initialize() {
@@ -50,8 +49,6 @@ public class GestionDispositivosController {
 
         dispositivosTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> mostrarDescripcion());
 
-        dispositivosTableView.setOnMouseClicked(this::mostrarDescripcion);
-        dispositivosTableView.refresh();
         cargarDispositivos();
     }
 
@@ -84,11 +81,20 @@ public class GestionDispositivosController {
         cargarDispositivos();
     }
 
+    @FXML
+    private void mostrarDescripcion() {
+        Dispositivo selectedDispositivo = dispositivosTableView.getSelectionModel().getSelectedItem();
+        if (selectedDispositivo != null) {
+            detalleDescripcionTextArea.setWrapText(true); // Ajusta el valor según necesites
+            detalleDescripcionTextArea.setText(selectedDispositivo.getDescripcion());
+        }
+    }
+}
 
     /*
     @FXML
     private void aniadirStock() {
-         Dispositivo dispositivoSeleccionado = dispositivosTableView.getSelectionModel().getSelectedItem();
+        Dispositivo dispositivoSeleccionado = dispositivosTableView.getSelectionModel().getSelectedItem();
         if (dispositivoSeleccionado != null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("AniadirStock.fxml"));
@@ -122,15 +128,4 @@ public class GestionDispositivosController {
             e.printStackTrace();
         }
     }
-
      */
-
-    @FXML
-    private void mostrarDescripcion() {
-        Dispositivo selectedDispositivo = dispositivosTableView.getSelectionModel().getSelectedItem();
-        if (selectedDispositivo != null) {
-            descripcionText.setWrappingWidth(200); // Ajusta el valor según necesites
-            descripcionText.setText(selectedDispositivo.getDescripcion());
-        }
-    }
-}
