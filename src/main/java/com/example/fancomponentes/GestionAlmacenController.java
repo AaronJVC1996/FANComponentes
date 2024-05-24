@@ -38,31 +38,27 @@ public class GestionAlmacenController {
 
     @FXML
     private void initialize() {
+        // Configurar las celdas de la tabla
+        idComponenteColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        nombreColumn.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        precioColumn.setCellValueFactory(new PropertyValueFactory<>("precio"));
+        stockColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
 
-
-
-        // Cargar los nombres de los componentes desde la base de datos
-
-
-        // Configurar el listener para el evento de selección en el ListView (obtenido de internet)
+        // Configurar el listener para el evento de selección en el TableView
         componentesTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            // Mostrar los detalles del empleado seleccionado
-            idComponenteColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-
-            nombreColumn.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-            precioColumn.setCellValueFactory(new PropertyValueFactory<>("precio"));
-            stockColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
-
-            componentesTableView.setOnMouseClicked(this::mostrarDescripcion);
-
-
+            // Mostrar la descripción del componente seleccionado
+            if (newValue != null) {
+                descripcionText.setWrappingWidth(200);  // Ajusta el valor según necesites
+                descripcionText.setText(newValue.getDescripcion());
+            } else {
+                descripcionText.setText("");
+            }
         });
 
-        componentesTableView.refresh();
         cargarComponentes();
-
         aplicarEstiloFilas();
     }
+
 
     // Metodo para cargar los nombres de los componentes desde la base de datos y mostrarlos en el ListView
     private void cargarComponentes() {
