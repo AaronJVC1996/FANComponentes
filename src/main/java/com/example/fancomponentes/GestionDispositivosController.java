@@ -41,13 +41,32 @@ public class GestionDispositivosController {
     private TextArea detalleDescripcionTextArea;
 
     @FXML
+    private TableView<Manual> manualTableView;
+
+    @FXML
+    private TableColumn<Manual, String> manualComponenteIdColumn;
+
+    @FXML
+    private TableColumn<Manual, String> manualComponenteNombreColumn;
+
+    @FXML
+    private TableColumn<Manual, Integer> manualCantidadColumn;
+
+    @FXML
     private void initialize() {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("nDispositivo"));
         nombreColumn.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         precioColumn.setCellValueFactory(new PropertyValueFactory<>("precio"));
         stockColumn.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
 
-        dispositivosTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> mostrarDescripcion());
+        manualComponenteIdColumn.setCellValueFactory(new PropertyValueFactory<>("componenteId"));
+        manualComponenteNombreColumn.setCellValueFactory(new PropertyValueFactory<>("nombreComponente"));
+        manualCantidadColumn.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
+
+        dispositivosTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            mostrarDescripcion();
+            cargarManual(newValue);
+        });
 
         cargarDispositivos();
     }
@@ -89,43 +108,39 @@ public class GestionDispositivosController {
             detalleDescripcionTextArea.setText(selectedDispositivo.getDescripcion());
         }
     }
-}
 
-    /*
-    @FXML
-    private void aniadirStock() {
-        Dispositivo dispositivoSeleccionado = dispositivosTableView.getSelectionModel().getSelectedItem();
-        if (dispositivoSeleccionado != null) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("AniadirStock.fxml"));
-                Parent root = loader.load();
+    private void cargarManual(Dispositivo dispositivo) {
+        if (dispositivo != null) {
+            try (Connection conexion = DatabaseConnector.getConexion()) {
+                String consulta = "SELECT M.COMPONENTE, C.NOMBRE, M.CANTIDAD, C.PRECIO FROM MANUAL M JOIN COMPONENTES C ON M.COMPONENTE = C.IDCOMPONENTE WHERE M.N_DISPOSITIVO = ?";
+                try (PreparedStatement declaracion = conexion.prepareStatement(consulta)) {
+                    declaracion.setInt(1, dispositivo.getNDispositivo());
+                    ResultSet resultado = declaracion.executeQuery();
+                    ObservableList<Manual> manuales = FXCollections.observableArrayList();
+                    double precioTotal = 0.0;
+                    while (resultado.next()) {
+                        String componenteId = resultado.getString("COMPONENTE");
+                        String nombreComponente = resultado.getString("NOMBRE");
+                        int cantidad = resultado.getInt("CANTIDAD");
+                        double precioComponente = resultado.getDouble("PRECIO");
 
-                AniadirStockController controller = loader.getController();
-                controller.setDispositivoId(dispositivoSeleccionado.getNDispositivo());
+                        // Calcular el precio total del dispositivo
+                        precioTotal += precioComponente * cantidad;
 
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));
-                stage.show();
-            } catch (Exception e) {
+                        Manual manual = new Manual(componenteId, nombreComponente, cantidad);
+                        manuales.add(manual);
+                    }
+                    manualTableView.setItems(manuales);
+
+                    // Actualizar el precio del dispositivo seleccionado
+                    dispositivo.setPrecio(precioTotal);
+                    dispositivosTableView.refresh();
+                }
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Ningún Dispositivo Seleccionado");
-            alert.setContentText("Por favor, selecciona un dispositivo para añadir stock.");
-            alert.showAndWait();
+            manualTableView.getItems().clear();
         }
     }
-
-    @FXML
-    private void aniadirDispositivo(ActionEvent event) {
-        try {
-            Parent agregar = FXMLLoader.load(getClass().getResource("NuevosDispositivos.fxml"));
-            Stage stage = new Stage();
-            stage.setScene(new Scene(agregar));
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-     */
+}

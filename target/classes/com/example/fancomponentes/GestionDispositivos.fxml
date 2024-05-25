@@ -15,22 +15,21 @@
         <!-- Table View de Dispositivos -->
         <TableView fx:id="dispositivosTableView" prefHeight="580.0" prefWidth="400.0">
             <columns>
-                <TableColumn fx:id="nDispositivoColumn" prefWidth="88.0" text="N. Dispositivo" />
+                <TableColumn fx:id="idColumn" prefWidth="88.0" text="N. Dispositivo" />
                 <TableColumn fx:id="nombreColumn" prefWidth="112.0" text="Nombre" />
                 <TableColumn fx:id="precioColumn" prefWidth="98.0" text="Precio" />
-                <TableColumn fx:id="cantidadColumn" prefWidth="62.0" text="Cantidad" />
-                <TableColumn fx:id="descripcionColumn" prefWidth="120.0" text="Descripción" />
+                <TableColumn fx:id="stockColumn" prefWidth="62.0" text="Cantidad" />
             </columns>
         </TableView>
 
         <!-- Botones Sumar y Restar -->
         <VBox alignment="CENTER" spacing="10.0">
-            <Button fx:id="btnSumar" onAction="#sumarCantidad" prefHeight="37.0" prefWidth="84.0" text="+">
+            <Button fx:id="btnSumar"  prefHeight="37.0" prefWidth="84.0" text="+">
                 <font>
                     <Font size="20.0" />
                 </font>
             </Button>
-            <Button fx:id="btnRestar" onAction="#restarCantidad" prefHeight="42.0" prefWidth="89.0" text="-">
+            <Button fx:id="btnRestar"  prefHeight="42.0" prefWidth="89.0" text="-">
                 <font>
                     <Font size="20.0" />
                 </font>
@@ -42,20 +41,20 @@
             <Label text="Descripción" />
             <TextArea fx:id="detalleDescripcionTextArea" editable="false" prefHeight="125.0" prefWidth="337.0" wrapText="true" />
 
-            <TableView fx:id="componentesTableView" prefHeight="267.0" prefWidth="337.0">
+            <!-- Cambiado el ID a manualTableView -->
+            <TableView fx:id="manualTableView" prefHeight="267.0" prefWidth="337.0">
                 <columns>
-                    <TableColumn fx:id="componenteIdColumn" prefWidth="70.0" text="Id" />
-                    <TableColumn fx:id="componenteNombreColumn" text="Nombre" />
-                    <TableColumn fx:id="componenteCantidadColumn" prefWidth="97.0" text="Cantidad" />
-                    <TableColumn fx:id="componentePrecioColumn" prefWidth="89.0" text="Precio" />
+                    <TableColumn fx:id="manualComponenteIdColumn" prefWidth="70.0" text="Componente Id" />
+                    <TableColumn fx:id="manualComponenteNombreColumn" text="Nombre" />
+                    <TableColumn fx:id="manualCantidadColumn" prefWidth="97.0" text="Cantidad" />
                 </columns>
             </TableView>
 
             <!-- Botones para acciones en componentes -->
             <HBox spacing="10.0">
-                <Button fx:id="btnNuevo" onAction="#nuevoComponente" prefHeight="48.0" prefWidth="85.0" text="Nuevo" />
+                <Button fx:id="btnNuevo"  prefHeight="48.0" prefWidth="85.0" text="Nuevo" />
                 <Region HBox.hgrow="ALWAYS" />
-                <Button fx:id="btnEditar" onAction="#editarComponente" prefHeight="47.0" prefWidth="82.0" text="Editar" />
+                <Button fx:id="btnEditar"  prefHeight="47.0" prefWidth="82.0" text="Editar" />
             </HBox>
         </VBox>
     </HBox>
