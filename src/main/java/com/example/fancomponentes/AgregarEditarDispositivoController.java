@@ -209,4 +209,17 @@ public class AgregarEditarDispositivoController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
+    @FXML
+    private void quitarComponente() {
+        Manual selectedManualComponente = manualTableView.getSelectionModel().getSelectedItem();
+        if (selectedManualComponente != null) {
+            if (selectedManualComponente.getCantidad() > 1) {
+                selectedManualComponente.setCantidad(selectedManualComponente.getCantidad() - 1);
+            } else {
+                manualComponentes.remove(selectedManualComponente);
+            }
+            manualTableView.refresh();
+        }
+    }
+
 }

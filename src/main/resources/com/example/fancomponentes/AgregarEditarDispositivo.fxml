@@ -47,7 +47,7 @@
             <Button onAction="#aniadirComponente" prefHeight="25.0" prefWidth="134.0" text="Añadir Componente" />
         </VBox>
 
-        <!-- Sección del Manual -->
+
         <VBox alignment="TOP_CENTER" spacing="10.0">
             <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Manual del Dispositivo" />
             <TableView fx:id="manualTableView" prefHeight="300.0" prefWidth="400.0">
@@ -57,6 +57,7 @@
                     <TableColumn fx:id="manualCantidadColumn" prefWidth="100.0" text="Cantidad" />
                 </columns>
             </TableView>
+            <Button onAction="#quitarComponente" prefHeight="25.0" prefWidth="134.0" text="Quitar Componente" />
         </VBox>
     </HBox>
 
