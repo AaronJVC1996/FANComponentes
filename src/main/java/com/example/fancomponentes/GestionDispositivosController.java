@@ -12,6 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -288,4 +289,27 @@ public class GestionDispositivosController {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
+    @FXML
+    private void abrirVentanaAgregarEditarDispositivo(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AgregarEditarDispositivo.fxml"));
+            Parent root = loader.load();
+
+            // Obtener el controlador de la ventana AgregarEditarDispositivo
+            AgregarEditarDispositivoController controller = loader.getController();
+
+            // Configurar cualquier dato necesario en el controlador de la ventana AgregarEditarDispositivo
+
+            // Crear un nuevo Stage para la ventana AgregarEditarDispositivo
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Agregar o Editar Dispositivo");
+
+            // Mostrar la ventana
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

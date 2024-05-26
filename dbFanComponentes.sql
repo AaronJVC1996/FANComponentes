@@ -23,7 +23,7 @@ CREATE TABLE COMPONENTES(
 
 
 CREATE TABLE DISPOSITIVOS(
-                             N_DISPOSITIVO INT,
+                             N_DISPOSITIVO INT AUTO_INCREMENT,
                              NOMBRE VARCHAR(50),
                              PRECIO DOUBLE,
                              DESCRIPCION VARCHAR(200),
