@@ -299,7 +299,7 @@ public class GestionDispositivosController {
         alert.showAndWait();
     }
     @FXML
-    private void abrirVentanaAgregarEditarDispositivo(ActionEvent event) {
+    private void abrirVentanaAgregarDispositivo(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AgregarDispositivo.fxml"));
             Parent root = loader.load();
@@ -319,6 +319,34 @@ public class GestionDispositivosController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    @FXML
+    private void editarDispositivo() {
+        Dispositivo selectedDispositivo = dispositivosTableView.getSelectionModel().getSelectedItem();
+        if (selectedDispositivo != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("EditarDispositivo.fxml"));
+                Parent root = loader.load();
+                EditarDispositivoController controller = loader.getController();
+                controller.setDispositivo(selectedDispositivo);
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            mostrarMensajeAdvertencia("Debes seleccionar un dispositivo para editar.");
+        }
+    }
+
+    private void mostrarMensajeAdvertencia(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Advertencia");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 
 }
