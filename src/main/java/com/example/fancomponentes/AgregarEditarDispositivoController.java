@@ -74,6 +74,7 @@ public class AgregarEditarDispositivoController {
         manualTableView.setItems(manualComponentes);
 
         cargarComponentes();
+        aplicarEstiloFilas();
     }
 
     private void cargarComponentes() {
@@ -106,7 +107,11 @@ public class AgregarEditarDispositivoController {
             boolean encontrado = false;
             for (Manual manualComponente : manualComponentes) {
                 if (manualComponente.getComponenteId().equals(selectedComponente.getId())) {
-                    manualComponente.setCantidad(manualComponente.getCantidad() + 1);
+                    if (manualComponente.getCantidad() < selectedComponente.getStock()) {
+                        manualComponente.setCantidad(manualComponente.getCantidad() + 1);
+                    } else {
+                        mostrarMensajeAdvertencia("No puedes añadir más de este componente, no hay suficiente stock.");
+                    }
                     encontrado = true;
                     break;
                 }
@@ -114,6 +119,19 @@ public class AgregarEditarDispositivoController {
             if (!encontrado) {
                 Manual manualComponente = new Manual(selectedComponente.getId(), selectedComponente.getNombre(), 1);
                 manualComponentes.add(manualComponente);
+            }
+            manualTableView.refresh();
+        }
+    }
+
+    @FXML
+    private void quitarComponente() {
+        Manual selectedManualComponente = manualTableView.getSelectionModel().getSelectedItem();
+        if (selectedManualComponente != null) {
+            if (selectedManualComponente.getCantidad() > 1) {
+                selectedManualComponente.setCantidad(selectedManualComponente.getCantidad() - 1);
+            } else {
+                manualComponentes.remove(selectedManualComponente);
             }
             manualTableView.refresh();
         }
@@ -204,22 +222,44 @@ public class AgregarEditarDispositivoController {
         alert.showAndWait();
     }
 
+    private void mostrarMensajeAdvertencia(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Advertencia");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+
     @FXML
     private void cancelar(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
-    @FXML
-    private void quitarComponente() {
-        Manual selectedManualComponente = manualTableView.getSelectionModel().getSelectedItem();
-        if (selectedManualComponente != null) {
-            if (selectedManualComponente.getCantidad() > 1) {
-                selectedManualComponente.setCantidad(selectedManualComponente.getCantidad() - 1);
-            } else {
-                manualComponentes.remove(selectedManualComponente);
-            }
-            manualTableView.refresh();
-        }
-    }
 
+    private void aplicarEstiloFilas() {
+        componentesTableView.setRowFactory(tv -> new TableRow<Componente>() {
+            @Override
+            protected void updateItem(Componente item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null) {
+                    setStyle("");
+                } else {
+                    Integer stock = item.getStock();
+                    if (stock == null) {
+                        setStyle("");
+                    } else {
+                        if (stock <= 5 && stock > 0) {
+                            getStyleClass().removeAll("low-stock", "out-of-stock");
+                            getStyleClass().add("low-stock");
+                        } else if (stock == 0) {
+                            getStyleClass().removeAll("low-stock", "out-of-stock");
+                            getStyleClass().add("out-of-stock");
+                        } else {
+                            getStyleClass().removeAll("low-stock", "out-of-stock");
+                        }
+                    }
+                }
+            }
+        });
+    }
 }

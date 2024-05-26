@@ -33,7 +33,7 @@
     <HBox alignment="TOP_CENTER" spacing="20.0">
 
         <!-- Sección de Componentes -->
-        <VBox alignment="TOP_LEFT" spacing="10.0">
+        <VBox alignment="TOP_LEFT" spacing="10.0" stylesheets="@css/styles.css">
             <Label prefHeight="25.0" prefWidth="116.0" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Componentes" />
             <TableView fx:id="componentesTableView" prefHeight="300.0" prefWidth="576.0">
                 <columns>
