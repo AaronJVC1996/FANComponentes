@@ -52,7 +52,7 @@
 
             <!-- Botones para acciones en componentes -->
             <HBox spacing="10.0">
-                <Button fx:id="btnAbrirVentanaAgregarEditar" onAction="#abrirVentanaAgregarEditarDispositivo" text="Abrir Ventana" />
+                <Button fx:id="btnAbrirVentanaAgregarEditar" onAction="#abrirVentanaAgregarEditarDispositivo" prefHeight="47.0" prefWidth="82.0" text="Agregar" />
                 <Region HBox.hgrow="ALWAYS" />
                 <Button fx:id="btnEditar"  prefHeight="47.0" prefWidth="82.0" text="Editar" />
             </HBox>

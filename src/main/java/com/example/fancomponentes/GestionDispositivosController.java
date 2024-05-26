@@ -9,7 +9,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -302,11 +301,11 @@ public class GestionDispositivosController {
     @FXML
     private void abrirVentanaAgregarEditarDispositivo(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("AgregarEditarDispositivo.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AgregarDispositivo.fxml"));
             Parent root = loader.load();
 
             // Obtener el controlador de la ventana AgregarEditarDispositivo
-            AgregarEditarDispositivoController controller = loader.getController();
+            AgregarDispositivoController controller = loader.getController();
 
             // Configurar cualquier dato necesario en el controlador de la ventana AgregarEditarDispositivo
 

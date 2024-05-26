@@ -18,7 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AgregarEditarDispositivoController {
+public class AgregarDispositivoController {
 
     @FXML
     private TableView<Componente> componentesTableView;
