@@ -24,12 +24,12 @@
 
         <!-- Botones Sumar y Restar -->
         <VBox alignment="CENTER" spacing="10.0">
-            <Button fx:id="btnSumar"  prefHeight="37.0" prefWidth="84.0" text="+">
+            <Button fx:id="btnSumar" prefHeight="37.0" prefWidth="84.0" text="+" onAction="#incrementarCantidad">
                 <font>
                     <Font size="20.0" />
                 </font>
             </Button>
-            <Button fx:id="btnRestar"  prefHeight="42.0" prefWidth="89.0" text="-">
+            <Button fx:id="btnRestar" prefHeight="42.0" prefWidth="89.0" text="-" onAction="#decrementarCantidad">
                 <font>
                     <Font size="20.0" />
                 </font>
