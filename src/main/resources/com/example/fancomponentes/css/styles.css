@@ -7,3 +7,55 @@
     -fx-background-color: #fa4646;
 
 }
+
+/* styles.css */
+.label-header {
+    -fx-font-size: 15px;
+    -fx-text-fill: #333;
+}
+
+.label-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0073e6;
+}
+
+.button-primary {
+    -fx-background-color: #0073e6;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+    -fx-background-radius: 5;
+}
+
+.button-secondary {
+    -fx-background-color: #e67300;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+    -fx-background-radius: 5;
+}
+
+.button-save {
+    -fx-background-color: #28a745;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+    -fx-background-radius: 5;
+}
+
+.button-cancel {
+    -fx-background-color: #dc3545;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+    -fx-background-radius: 5;
+}
+
+TableView {
+    -fx-border-color: #ddd;
+    -fx-border-width: 1px;
+    -fx-table-cell-border-color: transparent;
+    -fx-alternate-row-fill-visible: true;
+    -fx-alternate-row-fill: #f9f9f9;
+}
