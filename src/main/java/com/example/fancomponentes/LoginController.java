@@ -41,7 +41,6 @@ public class LoginController {
         idImagenLogo.setFitHeight(300);
     }
 
-
     // Método para verificar las credenciales del usuario
     @FXML
     protected void onLoginButtonClicked() {
@@ -51,7 +50,7 @@ public class LoginController {
         try (Connection conexion = DatabaseConnector.getConexion()) {
             if (verificarCredenciales(username, password)) {
                 System.out.println("Inicio de sesión exitoso");
-                cargarVistaLoginCorrecto();
+                cargarVistaLoginCorrecto(username.charAt(0));
 
                 // Cargar y mostrar la vista de gestión de almacén (esto es de la anterior)
                 // cargarVistaGestionAlmacen();
@@ -86,15 +85,19 @@ public class LoginController {
 
 
     //Método para cargar y mostrar la vista de loginCorrecto, pantalla de cargando..
-    private void cargarVistaLoginCorrecto() {
+    private void cargarVistaLoginCorrecto(char letraUsuar) {
         try{
             // Verificar la ruta del archivo FXML
+            // Cargar la pantalla de cargando desde el archivo fxml
             URL fxmlLocation = getClass().getResource("pantallaLoginCorrecto.fxml");
-            System.out.println("FXML Location: " + fxmlLocation); // Verifica que no sea null
 
-            //Cargar la pantalla de cargando desde el archivo fxml
             FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
             Parent root = fxmlLoader.load();
+
+
+            // Pasar tipo de usuario al controlador de pantallaLoginCorrectoController
+            pantallaLoginCorrectoController controller = fxmlLoader.getController();
+            controller.setLetraUsuario(letraUsuar);
 
             // Crear nueva escena y establecerla en la actual
 
@@ -103,13 +106,10 @@ public class LoginController {
             stage.setScene(scene);
 
             Stage stageActual = (Stage) loginButton.getScene().getWindow();
-
             stage.show();
             stageActual.close();
 
-
         } catch (IOException e) {
-            //throw new RuntimeException(e);
             e.printStackTrace();
         }
     }
