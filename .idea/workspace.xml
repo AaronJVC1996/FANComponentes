@@ -4,16 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="624cc35b-d073-4a60-8b56-ffcbc949797f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/fancomponentes/Manual.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+    <list default="true" id="624cc35b-d073-4a60-8b56-ffcbc949797f" name="Changes" comment="Cambio en el sql del idRol">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/fancomponentes/GestionDispositivosController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/fancomponentes/GestionDispositivosController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dbFanComponentes.sql" beforeDir="false" afterPath="$PROJECT_DIR$/dbFanComponentes.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/fancomponentes/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/fancomponentes/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/fancomponentes/pantallaLoginCorrectoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/fancomponentes/pantallaLoginCorrectoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/fancomponentes/GestionDispositivos.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/fancomponentes/GestionDispositivos.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/fancomponentes/GestionDispositivos.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/fancomponentes/GestionDispositivos.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/fancomponentes/GestionDispositivosController$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/fancomponentes/GestionDispositivosController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/fancomponentes/GestionDispositivosController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/fancomponentes/pantallaLoginCorrectoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/fancomponentes/pantallaLoginCorrectoController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -40,29 +36,30 @@
   &quot;associatedIndex&quot;: 4
 }</component>
   <component name="ProjectId" id="2gybCbjvowXUvDWrEaCh68AWE45" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Aaron/IdeaProjects/FANComponentes/mysql-connector-j-8.3.0/mysql-connector-j-8.3.0.jar",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Aaron/IdeaProjects/FANComponentes/mysql-connector-j-8.3.0/mysql-connector-j-8.3.0.jar&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
@@ -107,5 +104,9 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Cambio en el sql del idRol" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cambio en el sql del idRol" />
   </component>
 </project>

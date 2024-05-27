@@ -1,5 +1,5 @@
 CREATE DATABASE fanComponentes;
- -- DROP DATABASE fanComponentes;
+--  DROP DATABASE fanComponentes;
 use fanComponentes;
 
 CREATE TABLE ROLES(
