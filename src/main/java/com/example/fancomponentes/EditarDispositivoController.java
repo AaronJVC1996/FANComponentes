@@ -56,6 +56,12 @@ public class EditarDispositivoController {
     private ObservableList<Manual> manualComponentes;
     private Dispositivo dispositivo;
 
+    private GestionDispositivosController gestionDispositivosController;
+
+    public void setGestionDispositivosController(GestionDispositivosController controller) {
+        this.gestionDispositivosController = controller;
+    }
+
     @FXML
     private void initialize() {
         idComponenteColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -206,27 +212,26 @@ public class EditarDispositivoController {
             guardarManual(conexion, dispositivo.getNDispositivo());
             conexion.commit();
 
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("GestionDispositivos.fxml"));
-                Parent root = loader.load();
-                GestionDispositivosController controller = loader.getController();
-
-                Scene scene = new Scene(root);
-                Stage stage = new Stage();
-                stage.setScene(scene);
-                stage.show();
-
-                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                currentStage.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-                mostrarMensajeError("Error al cargar la ventana de gestión de dispositivos.");
-            }
+            mostrarMensajeConfirmacion("Dispositivo actualizado con éxito.");
+            gestionDispositivosController.cargarDispositivos();
+            cerrarVentana(event);
 
         } catch (SQLException e) {
             e.printStackTrace();
             mostrarMensajeError("Error al actualizar el dispositivo: " + e.getMessage());
         }
+    }
+    private void cerrarVentana(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
+    }
+    private void mostrarMensajeConfirmacion(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmación");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 
     private void eliminarManual(Connection conexion, int dispositivoId) throws SQLException {

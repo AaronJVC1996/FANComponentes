@@ -1,22 +1,19 @@
 package com.example.fancomponentes;
 
+import com.example.fancomponentes.Componente;
+import com.example.fancomponentes.DatabaseConnector;
+import com.example.fancomponentes.GestionDispositivosController;
+import com.example.fancomponentes.Manual;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class AgregarDispositivoController {
 
@@ -57,6 +54,8 @@ public class AgregarDispositivoController {
     private TableColumn<Manual, Integer> manualCantidadColumn;
 
     private ObservableList<Manual> manualComponentes;
+    private GestionDispositivosController gestionDispositivosController;
+    private Stage stage;
 
     @FXML
     private void initialize() {
@@ -75,6 +74,14 @@ public class AgregarDispositivoController {
 
         cargarComponentes();
         aplicarEstiloFilas();
+    }
+
+    public void setGestionDispositivosController(GestionDispositivosController gestionDispositivosController) {
+        this.gestionDispositivosController = gestionDispositivosController;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
     private void cargarComponentes() {
@@ -141,76 +148,84 @@ public class AgregarDispositivoController {
     private void guardarDispositivo(ActionEvent event) {
         String nombre = nombreTextField.getText();
         String descripcion = descripcionTextArea.getText();
-        String cantidadStr = "1";
-        String precioStr = "0";
 
         if (nombre.isEmpty() || descripcion.isEmpty()) {
             mostrarMensajeError("El nombre y la descripción no pueden estar vacíos.");
             return;
         }
 
-        int cantidad = 1;
-        double precio = 0.0;
-
-        int dispositivoId = 0;
-
         try (Connection conexion = DatabaseConnector.getConexion()) {
-            conexion.setAutoCommit(false);
-
-            String insertarDispositivo = "INSERT INTO DISPOSITIVOS (NOMBRE, PRECIO, DESCRIPCION, CANTIDAD) VALUES (?, ?, ?, ?)";
-            try (PreparedStatement declaracion = conexion.prepareStatement(insertarDispositivo, PreparedStatement.RETURN_GENERATED_KEYS)) {
+            String insertarDispositivo = "INSERT INTO DISPOSITIVOS (NOMBRE, DESCRIPCION) VALUES (?, ?)";
+            try (PreparedStatement declaracion = conexion.prepareStatement(insertarDispositivo, Statement.RETURN_GENERATED_KEYS)) {
                 declaracion.setString(1, nombre);
-                declaracion.setDouble(2, precio);
-                declaracion.setString(3, descripcion);
-                declaracion.setInt(4, cantidad);
-
-                int affectedRows = declaracion.executeUpdate();
-                if (affectedRows == 0) {
-                    throw new SQLException("Error al insertar el dispositivo, no se insertaron filas.");
-                }
+                declaracion.setString(2, descripcion);
+                declaracion.executeUpdate();
 
                 ResultSet generatedKeys = declaracion.getGeneratedKeys();
                 if (generatedKeys.next()) {
-                    dispositivoId = generatedKeys.getInt(1);
-                } else {
-                    throw new SQLException("Error al obtener el ID del dispositivo insertado.");
+                    int dispositivoId = generatedKeys.getInt(1);
+                    guardarManual(conexion, dispositivoId);
                 }
             }
 
-            guardarManual(conexion, dispositivoId);
-            conexion.commit();
-
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("GestionDispositivos.fxml"));
-                Parent root = loader.load();
-                GestionDispositivosController controller = loader.getController();
-
-                Scene scene = new Scene(root);
-                Stage stage = new Stage();
-                stage.setScene(scene);
-                stage.show();
-
-                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                currentStage.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-                mostrarMensajeError("Error al cargar la ventana de gestión de dispositivos.");
-            }
+            mostrarMensajeConfirmacion("Dispositivo guardado con éxito.");
+            // Llama a setGestionDispositivosController antes de cerrar la ventana
+            setGestionDispositivosController(gestionDispositivosController);
+            gestionDispositivosController.cargarDispositivos();
+            cerrarVentana(event);
         } catch (SQLException e) {
             e.printStackTrace();
             mostrarMensajeError("Error al guardar el dispositivo: " + e.getMessage());
         }
     }
 
+    private void mostrarMensajeConfirmacion(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmación");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+
+    private void cerrarVentana(ActionEvent event) {
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.close();
+        if (stage != null) {
+            stage.show();
+        }
+    }
+
     private void guardarManual(Connection conexion, int dispositivoId) throws SQLException {
         String insertarManual = "INSERT INTO MANUAL (N_DISPOSITIVO, COMPONENTE, CANTIDAD) VALUES (?, ?, ?)";
+        double precioTotal = 0.0;
+
         for (Manual componente : manualComponentes) {
+            // Insertar componente en la tabla MANUAL
             try (PreparedStatement declaracion = conexion.prepareStatement(insertarManual)) {
                 declaracion.setInt(1, dispositivoId);
                 declaracion.setString(2, componente.getComponenteId());
                 declaracion.setInt(3, componente.getCantidad());
                 declaracion.executeUpdate();
             }
+
+            // Calcular el precio total del dispositivo basado en los componentes
+            String consultaPrecio = "SELECT PRECIO FROM COMPONENTES WHERE IDCOMPONENTE = ?";
+            try (PreparedStatement declaracion = conexion.prepareStatement(consultaPrecio)) {
+                declaracion.setString(1, componente.getComponenteId());
+                ResultSet resultado = declaracion.executeQuery();
+                if (resultado.next()) {
+                    double precioComponente = resultado.getDouble("PRECIO");
+                    precioTotal += precioComponente * componente.getCantidad();
+                }
+            }
+        }
+
+        // Actualizar el precio total del dispositivo en la tabla DISPOSITIVOS
+        String actualizarPrecioDispositivo = "UPDATE DISPOSITIVOS SET PRECIO = ? WHERE N_DISPOSITIVO = ?";
+        try (PreparedStatement declaracion = conexion.prepareStatement(actualizarPrecioDispositivo)) {
+            declaracion.setDouble(1, precioTotal);
+            declaracion.setInt(2, dispositivoId);
+            declaracion.executeUpdate();
         }
     }
 

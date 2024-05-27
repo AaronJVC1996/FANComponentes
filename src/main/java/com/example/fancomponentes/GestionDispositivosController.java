@@ -54,10 +54,9 @@ public class GestionDispositivosController {
 
     @FXML
     private Button btnRestar;
-// Inicializa los dispositivos, sus descripciones y manuales.
+
     @FXML
     private void initialize() {
-        // Configuración inicial de las columnas
         idColumn.setCellValueFactory(new PropertyValueFactory<>("nDispositivo"));
         nombreColumn.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         precioColumn.setCellValueFactory(new PropertyValueFactory<>("precio"));
@@ -74,8 +73,8 @@ public class GestionDispositivosController {
 
         cargarDispositivos();
     }
-// Carga los dispositivos existentes en el TableView
-    private void cargarDispositivos() {
+
+    public void cargarDispositivos() {
         try (Connection conexion = DatabaseConnector.getConexion()) {
             String consulta = "SELECT N_DISPOSITIVO, NOMBRE, PRECIO, DESCRIPCION, CANTIDAD FROM DISPOSITIVOS";
             try (PreparedStatement declaracion = conexion.prepareStatement(consulta)) {
@@ -103,17 +102,16 @@ public class GestionDispositivosController {
         dispositivosTableView.getItems().clear();
         cargarDispositivos();
     }
-// Muestra la descripcion de el dispositivo seleccionado
+
     @FXML
     private void mostrarDescripcion() {
         Dispositivo selectedDispositivo = dispositivosTableView.getSelectionModel().getSelectedItem();
         if (selectedDispositivo != null) {
-            detalleDescripcionTextArea.setWrapText(true); // Ajusta el valor según necesites
+            detalleDescripcionTextArea.setWrapText(true);
             detalleDescripcionTextArea.setText(selectedDispositivo.getDescripcion());
         }
     }
-// Carga el manual del dispositivo seleccionado y el precio de los componentes y su cantidades que compongan
-// dicho manual, sera el precio por unidad del dispositivo
+
     private void cargarManual(Dispositivo dispositivo) {
         if (dispositivo != null) {
             try (Connection conexion = DatabaseConnector.getConexion()) {
@@ -129,7 +127,6 @@ public class GestionDispositivosController {
                         int cantidad = resultado.getInt("CANTIDAD");
                         double precioComponente = resultado.getDouble("PRECIO");
 
-                        // Calcular el precio total del dispositivo
                         precioTotal += precioComponente * cantidad;
 
                         Manual manual = new Manual(componenteId, nombreComponente, cantidad);
@@ -137,7 +134,6 @@ public class GestionDispositivosController {
                     }
                     manualTableView.setItems(manuales);
 
-                    // Actualizar el precio del dispositivo seleccionado
                     dispositivo.setPrecio(precioTotal * dispositivo.getCantidad());
                     dispositivosTableView.refresh();
                 }
@@ -149,38 +145,34 @@ public class GestionDispositivosController {
         }
     }
 
-    //Este metodo aumenta uno a cantidad de dispositivo y con ello aumenta el precio y reduce la cantidad de componentes.
-// verifica si hay suficientes componentes para crear un dispositivo, si hay suficientes componentes
-// el dispositivo sera creado, pero si no hay suficientes componentes saltara un error sobre esto.
     @FXML
     private void incrementarCantidad() {
         Dispositivo selectedDispositivo = dispositivosTableView.getSelectionModel().getSelectedItem();
         if (selectedDispositivo != null) {
             if (verificarExistenciasComponentes(selectedDispositivo, 1)) {
-                actualizarStockComponentes(selectedDispositivo, -1);  // Reducir stock de componentes
+                actualizarStockComponentes(selectedDispositivo, -1);
                 selectedDispositivo.setCantidad(selectedDispositivo.getCantidad() + 1);
                 actualizarCantidadDispositivo(selectedDispositivo);
-                actualizarPrecioDispositivo(selectedDispositivo); // Actualizar el precio del dispositivo
+                actualizarPrecioDispositivo(selectedDispositivo);
                 dispositivosTableView.refresh();
-            } else { // Usamos el metodo mostrarMensajeError y le damos un valor al parametro que pide(el mensaje).
+            } else {
                 mostrarMensajeError("No hay suficientes existencias de componentes para añadir más dispositivos.");
             }
         }
     }
-// Resta uno a dispositivo y con ello aumenta sus componentes y disminuye su precio
+
     @FXML
     private void decrementarCantidad() {
         Dispositivo selectedDispositivo = dispositivosTableView.getSelectionModel().getSelectedItem();
         if (selectedDispositivo != null && selectedDispositivo.getCantidad() > 0) {
-            actualizarStockComponentes(selectedDispositivo, 1); // Aumentar stock de componentes
+            actualizarStockComponentes(selectedDispositivo, 1);
             selectedDispositivo.setCantidad(selectedDispositivo.getCantidad() - 1);
             actualizarCantidadDispositivo(selectedDispositivo);
-            actualizarPrecioDispositivo(selectedDispositivo); // Actualizar el precio del dispositivo
+            actualizarPrecioDispositivo(selectedDispositivo);
             dispositivosTableView.refresh();
         }
     }
-// Este metodo actualiza el precio del dispositivo segun los componentes de su manual y la cantidad de dispositivos
-// este metodo es usado en incrementar o decrementar cantidad
+
     private void actualizarPrecioDispositivo(Dispositivo dispositivo) {
         try (Connection conexion = DatabaseConnector.getConexion()) {
             String consulta = "SELECT M.COMPONENTE, C.PRECIO, M.CANTIDAD FROM MANUAL M JOIN COMPONENTES C ON M.COMPONENTE = C.IDCOMPONENTE WHERE M.N_DISPOSITIVO = ?";
@@ -200,9 +192,7 @@ public class GestionDispositivosController {
             e.printStackTrace();
         }
     }
-// Este metodo realizara la actualizacion de la cantidad de componentes segun la cantidad de dispositivos
-// utilizara el metodo de abajo para hacer un update con los datos de este metodo, que tambien itera sobre cada componente
-// este metodo es usado en incrementar o decrementar cantidad
+
     private void actualizarStockComponentes(Dispositivo dispositivo, int factor) {
         if (dispositivo != null) {
             try (Connection conexion = DatabaseConnector.getConexion()) {
@@ -222,7 +212,7 @@ public class GestionDispositivosController {
             }
         }
     }
-// Este metodo sera el base para actualizar el stock y usarlo en el metodo de arriba.
+
     private void actualizarStockComponente(Connection conexion, String componenteId, int cantidad) {
         String actualizarStock = "UPDATE COMPONENTES SET STOCK = STOCK + ? WHERE IDCOMPONENTE = ?";
         try (PreparedStatement declaracion = conexion.prepareStatement(actualizarStock)) {
@@ -233,8 +223,7 @@ public class GestionDispositivosController {
             e.printStackTrace();
         }
     }
-//Este metodo ahora toma en cuenta la cantidad actual de dispositivos
-//y el incremento deseado para asegurar que hay suficientes existencias de componentes antes de permitir el incremento
+
     private boolean verificarExistenciasComponentes(Dispositivo dispositivo, int incremento) {
         if (dispositivo != null) {
             try (Connection conexion = DatabaseConnector.getConexion()) {
@@ -246,7 +235,6 @@ public class GestionDispositivosController {
                         String componenteId = resultado.getString("COMPONENTE");
                         int cantidadNecesaria = resultado.getInt("CANTIDAD") * incremento;
 
-                        // Verificar el stock actual del componente
                         if (!haySuficienteStock(componenteId, cantidadNecesaria)) {
                             return false;
                         }
@@ -258,7 +246,7 @@ public class GestionDispositivosController {
         }
         return true;
     }
-//Este metodo verifica si hay suficiente stock de componentes considerando la cantidad total
+
     private boolean haySuficienteStock(String componenteId, int cantidadNecesaria) {
         try (Connection conexion = DatabaseConnector.getConexion()) {
             String consulta = "SELECT STOCK FROM COMPONENTES WHERE IDCOMPONENTE = ?";
@@ -275,8 +263,7 @@ public class GestionDispositivosController {
         }
         return false;
     }
-// Este metodo actualiza la cantidad de dispositivos en el dispositivo indicado
-// este metodo es usado en incrementar o decrementar cantidad
+
     private void actualizarCantidadDispositivo(Dispositivo dispositivo) {
         try (Connection conexion = DatabaseConnector.getConexion()) {
             String actualizarCantidad = "UPDATE DISPOSITIVOS SET CANTIDAD = ? WHERE N_DISPOSITIVO = ?";
@@ -289,8 +276,7 @@ public class GestionDispositivosController {
             e.printStackTrace();
         }
     }
-// Ventana del mensaje de error en caso de que no se puedan crear mas dispositivos debido a que no hay
-// suficientes existencias de componentes para crearlo
+
     private void mostrarMensajeError(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -298,28 +284,26 @@ public class GestionDispositivosController {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
+
     @FXML
     private void abrirVentanaAgregarDispositivo(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AgregarDispositivo.fxml"));
             Parent root = loader.load();
 
-            // Obtener el controlador de la ventana AgregarEditarDispositivo
             AgregarDispositivoController controller = loader.getController();
+            controller.setGestionDispositivosController(this);
 
-            // Configurar cualquier dato necesario en el controlador de la ventana AgregarEditarDispositivo
-
-            // Crear un nuevo Stage para la ventana AgregarEditarDispositivo
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setTitle("Agregar o Editar Dispositivo");
+            stage.setTitle("Agregar Dispositivo");
 
-            // Mostrar la ventana
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     @FXML
     private void editarDispositivo() {
         Dispositivo selectedDispositivo = dispositivosTableView.getSelectionModel().getSelectedItem();
@@ -329,6 +313,8 @@ public class GestionDispositivosController {
                 Parent root = loader.load();
                 EditarDispositivoController controller = loader.getController();
                 controller.setDispositivo(selectedDispositivo);
+
+                controller.setGestionDispositivosController(this);
 
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
