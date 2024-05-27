@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.sql.*;
+import java.util.Optional;
 
 public class AgregarDispositivoController {
 
@@ -148,40 +149,56 @@ public class AgregarDispositivoController {
     private void guardarDispositivo(ActionEvent event) {
         String nombre = nombreTextField.getText();
         String descripcion = descripcionTextArea.getText();
+        int cantidad = 1;
 
         if (nombre.isEmpty() || descripcion.isEmpty()) {
             mostrarMensajeError("El nombre y la descripción no pueden estar vacíos.");
             return;
         }
 
-        try (Connection conexion = DatabaseConnector.getConexion()) {
-            String insertarDispositivo = "INSERT INTO DISPOSITIVOS (NOMBRE, DESCRIPCION) VALUES (?, ?)";
-            try (PreparedStatement declaracion = conexion.prepareStatement(insertarDispositivo, Statement.RETURN_GENERATED_KEYS)) {
-                declaracion.setString(1, nombre);
-                declaracion.setString(2, descripcion);
-                declaracion.executeUpdate();
+        mostrarMensajeConfirmacion("¿Está seguro de que desea guardar el dispositivo?", () -> {
+            try (Connection conexion = DatabaseConnector.getConexion()) {
+                String insertarDispositivo = "INSERT INTO DISPOSITIVOS (NOMBRE, DESCRIPCION, CANTIDAD) VALUES (?, ?, ?)";
+                try (PreparedStatement declaracion = conexion.prepareStatement(insertarDispositivo, Statement.RETURN_GENERATED_KEYS)) {
+                    declaracion.setString(1, nombre);
+                    declaracion.setString(2, descripcion);
+                    declaracion.setInt(3, cantidad);
+                    declaracion.executeUpdate();
 
-                ResultSet generatedKeys = declaracion.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    int dispositivoId = generatedKeys.getInt(1);
-                    guardarManual(conexion, dispositivoId);
+                    ResultSet generatedKeys = declaracion.getGeneratedKeys();
+                    if (generatedKeys.next()) {
+                        int dispositivoId = generatedKeys.getInt(1);
+                        guardarManual(conexion, dispositivoId);
+                    }
                 }
-            }
 
-            mostrarMensajeConfirmacion("Dispositivo guardado con éxito.");
-            // Llama a setGestionDispositivosController antes de cerrar la ventana
-            setGestionDispositivosController(gestionDispositivosController);
-            gestionDispositivosController.cargarDispositivos();
-            cerrarVentana(event);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            mostrarMensajeError("Error al guardar el dispositivo: " + e.getMessage());
+                mostrarMensajeInformacion("Dispositivo guardado con éxito.");
+                // Llama a setGestionDispositivosController antes de cerrar la ventana
+                setGestionDispositivosController(gestionDispositivosController);
+                gestionDispositivosController.cargarDispositivos();
+                cerrarVentana(event);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                mostrarMensajeError("Error al guardar el dispositivo: " + e.getMessage());
+            }
+        });
+    }
+
+    private void mostrarMensajeConfirmacion(String mensaje, Runnable onSuccess) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmación");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            onSuccess.run();
         }
     }
 
-    private void mostrarMensajeConfirmacion(String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmación");
+    private void mostrarMensajeInformacion(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Información");
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();

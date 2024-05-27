@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.Optional;
 
 public class EditarDispositivoController {
 
@@ -197,41 +198,57 @@ public class EditarDispositivoController {
             return;
         }
 
-        try (Connection conexion = DatabaseConnector.getConexion()) {
-            conexion.setAutoCommit(false);
+        mostrarMensajeConfirmacion("¿Está seguro de que desea actualizar el dispositivo?", () -> {
+            try (Connection conexion = DatabaseConnector.getConexion()) {
+                conexion.setAutoCommit(false);
 
-            String actualizarDispositivo = "UPDATE DISPOSITIVOS SET NOMBRE = ?, DESCRIPCION = ? WHERE N_DISPOSITIVO = ?";
-            try (PreparedStatement declaracion = conexion.prepareStatement(actualizarDispositivo)) {
-                declaracion.setString(1, nombre);
-                declaracion.setString(2, descripcion);
-                declaracion.setInt(3, dispositivo.getNDispositivo());
-                declaracion.executeUpdate();
+                String actualizarDispositivo = "UPDATE DISPOSITIVOS SET NOMBRE = ?, DESCRIPCION = ? WHERE N_DISPOSITIVO = ?";
+                try (PreparedStatement declaracion = conexion.prepareStatement(actualizarDispositivo)) {
+                    declaracion.setString(1, nombre);
+                    declaracion.setString(2, descripcion);
+                    declaracion.setInt(3, dispositivo.getNDispositivo());
+                    declaracion.executeUpdate();
+                }
+
+                eliminarManual(conexion, dispositivo.getNDispositivo());
+                guardarManual(conexion, dispositivo.getNDispositivo());
+                conexion.commit();
+
+                mostrarMensajeInformacion("Dispositivo actualizado con éxito.");
+                gestionDispositivosController.cargarDispositivos();
+                cerrarVentana(event);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                mostrarMensajeError("Error al actualizar el dispositivo: " + e.getMessage());
             }
-
-            eliminarManual(conexion, dispositivo.getNDispositivo());
-            guardarManual(conexion, dispositivo.getNDispositivo());
-            conexion.commit();
-
-            mostrarMensajeConfirmacion("Dispositivo actualizado con éxito.");
-            gestionDispositivosController.cargarDispositivos();
-            cerrarVentana(event);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            mostrarMensajeError("Error al actualizar el dispositivo: " + e.getMessage());
-        }
+        });
     }
-    private void cerrarVentana(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
-    }
-    private void mostrarMensajeConfirmacion(String mensaje) {
+
+    private void mostrarMensajeConfirmacion(String mensaje, Runnable onSuccess) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmación");
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            onSuccess.run();
+        }
+    }
+
+    private void mostrarMensajeInformacion(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Información");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
         alert.showAndWait();
+    }
+
+    private void cerrarVentana(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
     }
 
     private void eliminarManual(Connection conexion, int dispositivoId) throws SQLException {
