@@ -5,13 +5,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER_LEFT" prefHeight="600.0" prefWidth="800.0" spacing="10.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fancomponentes.GestionDispositivosController">
+<VBox alignment="CENTER_LEFT" prefHeight="600.0" prefWidth="800.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fancomponentes.GestionDispositivosController" stylesheets="@css/styles.css">
 
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
 
-    <HBox spacing="10.0">
+    <HBox spacing="20.0">
         <!-- Table View de Dispositivos -->
         <TableView fx:id="dispositivosTableView" prefHeight="580.0" prefWidth="400.0">
             <columns>
@@ -24,12 +24,12 @@
 
         <!-- Botones Sumar y Restar -->
         <VBox alignment="CENTER" spacing="10.0">
-            <Button fx:id="btnSumar" prefHeight="37.0" prefWidth="84.0" text="+" onAction="#incrementarCantidad">
+            <Button fx:id="btnSumar" prefHeight="37.0" prefWidth="84.0" text="+" onAction="#incrementarCantidad" styleClass="button-increment">
                 <font>
                     <Font size="20.0" />
                 </font>
             </Button>
-            <Button fx:id="btnRestar" prefHeight="42.0" prefWidth="89.0" text="-" onAction="#decrementarCantidad">
+            <Button fx:id="btnRestar" prefHeight="42.0" prefWidth="89.0" text="-" onAction="#decrementarCantidad" styleClass="button-decrement">
                 <font>
                     <Font size="20.0" />
                 </font>
@@ -38,10 +38,10 @@
 
         <!-- Detalles del Dispositivo -->
         <VBox alignment="TOP_LEFT" prefHeight="580.0" prefWidth="380.0" spacing="10.0">
-            <Label text="Descripción" />
+            <Label text="Descripción" styleClass="label-header" />
             <TextArea fx:id="detalleDescripcionTextArea" editable="false" prefHeight="125.0" prefWidth="337.0" wrapText="true" />
 
-            <!-- Cambiado el ID a manualTableView -->
+            <!-- Manual del dispositivo -->
             <TableView fx:id="manualTableView" prefHeight="267.0" prefWidth="337.0">
                 <columns>
                     <TableColumn fx:id="manualComponenteIdColumn" prefWidth="70.0" text="Componente Id" />
@@ -52,9 +52,9 @@
 
             <!-- Botones para acciones en componentes -->
             <HBox spacing="10.0">
-                <Button fx:id="btnAgregar" onAction="#abrirVentanaAgregarDispositivo" prefHeight="47.0" prefWidth="82.0" text="Agregar" />
+                <Button fx:id="btnAgregar" onAction="#abrirVentanaAgregarDispositivo" prefHeight="47.0" prefWidth="82.0" text="Agregar" styleClass="button-primary" />
                 <Region HBox.hgrow="ALWAYS" />
-                <Button fx:id="btnEditar"  onAction="#editarDispositivo" prefHeight="47.0" prefWidth="82.0" text="Editar" />
+                <Button fx:id="btnEditar" onAction="#editarDispositivo" prefHeight="47.0" prefWidth="82.0" text="Editar" styleClass="button-secondary" />
             </HBox>
         </VBox>
     </HBox>
